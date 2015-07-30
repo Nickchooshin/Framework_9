@@ -14,8 +14,12 @@ SampleState::~SampleState()
 
 void SampleState::Init()
 {
-	Timer::GetInstance()->AddTimer(CreateTimerCallback(&SampleState::Timer));
-	Timer::GetInstance()->AddTimer(CreateTimerCallback(&SampleState::Timer2));
+	TimerID timer1 = Timer::GetInstance()->AddTimer(CreateTimerCallback(SampleState::Timer), 1.0f);
+	TimerID timer2 = Timer::GetInstance()->AddTimer(CreateTimerCallback(SampleState::Timer2));
+	TimerID timer3 = Timer::GetInstance()->AddTimer(CreateTimerCallback(SampleState::Timer2));
+
+	Timer::GetInstance()->RemoveTimer(timer3);
+	Timer::GetInstance()->PauseTimer(timer2);
 }
 
 void SampleState::Destroy()
@@ -24,7 +28,7 @@ void SampleState::Destroy()
 
 void SampleState::Update()
 {
-	printf("%f\n", Time::GetInstance()->deltaTime);
+	printf("Update: %f\n", Time::GetInstance()->deltaTime);
 }
 
 void SampleState::Timer(float dt)

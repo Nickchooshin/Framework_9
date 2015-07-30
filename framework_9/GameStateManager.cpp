@@ -49,9 +49,8 @@ namespace framework9
 	{
 		if (!m_stateStack.empty())
 		{
-			for (int i = 0; i < m_stateStack.size(); i++)
+			for (auto gameState : m_stateStack)
 			{
-				IGameState *gameState = m_stateStack[i];
 				gameState->Destroy();
 				delete gameState;
 			}

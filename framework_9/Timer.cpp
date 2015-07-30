@@ -4,28 +4,6 @@
 
 namespace framework9
 {
-	TimerInfo::_TimerInfo()
-		: callback(nullptr)
-		, interval(0.0f)
-		, delta(0.0f)
-		, id(0)
-	{
-	}
-	bool TimerInfo::operator ==(const _TimerInfo &timerInfo) const
-	{
-		if (id == timerInfo.id)
-			return true;
-
-		return false;
-	}
-	bool TimerInfo::operator !=(const _TimerInfo &timerInfo) const
-	{
-		if (id != timerInfo.id)
-			return true;
-
-		return false;
-	}
-
 	macro_singleton2(Timer);
 
 	Timer::Timer()
@@ -35,28 +13,23 @@ namespace framework9
 	}
 	Timer::~Timer()
 	{
+		RemoveAllTimer();
 	}
 
-	void Timer::AddTimer(TimerCallback callback, float interval)
+	TimerID Timer::AddTimer(TimerCallback callback, float interval)
 	{
-		TimerInfo timerInfo;
-		timerInfo.callback = callback;
-		timerInfo.interval = interval;
-		timerInfo.id = idCounter++;
+		TimerInfo newTimerInfo;
+		newTimerInfo.callback = callback;
+		newTimerInfo.interval = interval;
+		newTimerInfo.pause = false;
+		newTimerInfo.id = idCounter++;
 
-		auto iter = m_timerList.begin();
-		auto iter_end = m_timerList.end();
+		m_timerList.push_back(newTimerInfo);
 
-		for (; iter != iter_end; iter++)
-		{
-			if (*iter == timerInfo)
-				return;
-		}
-
-		m_timerList.push_back(timerInfo);
+		return newTimerInfo.id;
 	}
 
-	void Timer::Update()
+	void Timer::RemoveTimer(TimerID timerID)
 	{
 		auto iter = m_timerList.begin();
 		auto iter_end = m_timerList.end();
@@ -64,6 +37,50 @@ namespace framework9
 		for (; iter != iter_end; iter++)
 		{
 			TimerInfo &timerInfo = *iter;
+
+			if (timerInfo.id == timerID)
+			{
+				m_timerList.erase(iter);
+				break;
+			}
+		}
+	}
+
+	void Timer::RemoveAllTimer()
+	{
+		m_timerList.clear();
+	}
+
+	void Timer::ResumeTimer(TimerID timerID)
+	{
+		for (auto &timerInfo : m_timerList)
+		{
+			if (timerInfo.id == timerID)
+			{
+				timerInfo.pause = false;
+				return;
+			}
+		}
+	}
+
+	void Timer::PauseTimer(TimerID timerID)
+	{
+		for (auto &timerInfo : m_timerList)
+		{
+			if (timerInfo.id == timerID)
+			{
+				timerInfo.pause = true;
+				return;
+			}
+		}
+	}
+
+	void Timer::Update()
+	{
+		for (auto &timerInfo : m_timerList)
+		{
+			if (timerInfo.pause)
+				continue;
 
 			timerInfo.delta += Time::GetInstance()->deltaTime;
 			if (timerInfo.delta >= timerInfo.interval)
