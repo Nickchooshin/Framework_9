@@ -5,25 +5,29 @@
 
 namespace framework9
 {
+	class CDirect3DDevice;
+	class IGameState;
+
 	class CWindowsApp
 	{
 	private:
 		HINSTANCE m_instanceHandle;
 		HWND m_windowHandle;
 		WNDCLASSEX m_wndClassEx;
-		DWORD m_style;
-
 		int m_width, m_height;
 
+		CDirect3DDevice *m_direct3DDevice;
+
 	public:
-		CWindowsApp(HINSTANCE instance);
+		CWindowsApp();
 		~CWindowsApp();
 
-		void Init(int width = 640, int height = 480, DWORD style = WS_OVERLAPPED | WS_SYSMENU | WS_MINIMIZEBOX);
-		void Create(LPCTSTR windowName);
-		void Destroy();
+		bool Init(LPCTSTR windowName, int width = 640, int height = 480);
 
-		void Loop();
+		void Run(IGameState *gameState);
+	private:
+		bool AllocDevice();
+		void FreeDevice();
 	};
 };
 

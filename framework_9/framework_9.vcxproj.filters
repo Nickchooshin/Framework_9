@@ -4,9 +4,52 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="WindowsApp.cpp" />
+    <Filter Include="System">
+      <UniqueIdentifier>{712b5315-57d7-4d95-a8a3-a141158742bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="WindowsApp.h" />
+    <ClInclude Include="WindowsApp.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Direct3DDevice.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreManager.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStateManager.h">
+      <Filter>System</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="WindowsApp.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct3DDevice.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="CoreManager.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStateManager.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
