@@ -29,6 +29,6 @@ namespace framework9
 
 		macro_singleton(GameStateManager);
 	};
-};
+}
 
 #endif

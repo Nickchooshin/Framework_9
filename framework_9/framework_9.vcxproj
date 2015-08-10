@@ -83,19 +83,31 @@
   <ItemGroup>
     <ClCompile Include="CoreManager.cpp" />
     <ClCompile Include="Direct3DDevice.cpp" />
+    <ClCompile Include="EventReceiverKeyboard.cpp" />
+    <ClCompile Include="EventSender.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="TimerHandle.cpp" />
     <ClCompile Include="WindowsApp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CoreManager.h" />
     <ClInclude Include="Direct3DDevice.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="EventKeyboard.h" />
+    <ClInclude Include="EventReceiver.h" />
+    <ClInclude Include="EventReceiverKeyboard.h" />
+    <ClInclude Include="EventSender.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateManager.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="Keycode.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="TimerHandle.h" />
     <ClInclude Include="WindowsApp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

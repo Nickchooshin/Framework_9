@@ -4,6 +4,7 @@
 #include "CoreManager.h"
 #include "GameStateManager.h"
 #include "Time.h"
+#include "Input.h"
 
 #define WindowStyle WS_OVERLAPPED | WS_SYSMENU | WS_MINIMIZEBOX
 
@@ -70,6 +71,9 @@ namespace framework9
 
 		CoreManager::GetInstance()->SetDevice(m_direct3DDevice, m_width, m_height);
 		GameStateManager::GetInstance()->PushGameState(gameState);
+		//
+		Input::GetInstance()->Init(m_windowHandle);
+		//
 
 		{
 			MSG msg;
@@ -85,6 +89,7 @@ namespace framework9
 				}
 
 				Time::GetInstance()->CalculateDeltaTime();
+				Input::GetInstance()->Acquiring();
 				CoreManager::GetInstance()->Loop();
 			}
 

@@ -22,6 +22,6 @@ namespace framework9
 	private:
 		bool Init(HWND windowHandle, int width, int height);
 	};
-};
+}
 
 #endif

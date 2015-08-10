@@ -26,6 +26,6 @@ namespace framework9
 
 		macro_singleton(CoreManager);
 	};
-};
+}
 
 #endif

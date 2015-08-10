@@ -11,6 +11,6 @@ namespace framework9
 
 		virtual void Update() = 0;
 	};
-};
+}
 
 #endif

@@ -3,6 +3,8 @@
 
 #include "Singleton.h"
 
+#include "TimerHandle.h"
+
 #include <functional>
 #include <vector>
 
@@ -12,9 +14,6 @@ namespace framework9
 {
 	// typedef
 	typedef std::function<void(float)> TimerCallback;
-	typedef unsigned int TimerID;
-
-	const TimerID TIMER_ID_NULL = 0U;
 
 	// TimerInfo struct
 	typedef struct _TimerInfo
@@ -23,14 +22,14 @@ namespace framework9
 		float interval;
 		float delta;
 		bool pause;
-		TimerID id;
+		CTimerHandle handle;
 
 		_TimerInfo::_TimerInfo()
 			: callback(nullptr)
 			, interval(0.0f)
 			, delta(0.0f)
 			, pause(true)
-			, id(0)
+			, handle()
 		{
 		}
 	} TimerInfo;
@@ -40,17 +39,16 @@ namespace framework9
 	{
 	private:
 		std::vector<TimerInfo> m_timerList;
-		TimerID idCounter;
 
 	public:
 		// * issue 1
 		// 식별성이 없어서 중복된 Callback을 추가 가능.
-		TimerID AddTimer(TimerCallback callback, float interval = 0.0f);
-		void RemoveTimer(TimerID timerID);
+		CTimerHandle AddTimer(TimerCallback callback, float interval = 0.0f);
+		void RemoveTimer(CTimerHandle timerHandle);
 		void RemoveAllTimer();
 
-		void ResumeTimer(TimerID timerID);
-		void PauseTimer(TimerID timerID);
+		void ResumeTimer(CTimerHandle timerHandle);
+		void PauseTimer(CTimerHandle timerHandle);
 
 		void Update();
 	private:
@@ -60,6 +58,6 @@ namespace framework9
 
 		macro_singleton(Timer);
 	};
-};
+}
 
 #endif

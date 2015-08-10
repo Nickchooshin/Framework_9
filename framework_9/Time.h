@@ -25,6 +25,6 @@ namespace framework9
 
 		macro_singleton(Time);
 	};
-};
+}
 
 #endif

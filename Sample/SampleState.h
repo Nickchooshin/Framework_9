@@ -3,10 +3,20 @@
 
 #include "GameState.h"
 
+#include "Keycode.h"
+
+namespace framework9
+{
+	class CEventReceiver;
+}
+
 using namespace framework9;
 
 class SampleState : public IGameState
 {
+private:
+	CEventReceiver *m_eventReceiver;
+
 public:
 	SampleState();
 	~SampleState();
@@ -18,6 +28,8 @@ public:
 
 	void Timer(float dt);
 	void Timer2(float dt);
+
+	void Keyboard(KeyCode keycode, bool isPressed);
 };
 
 #endif

@@ -29,6 +29,6 @@ namespace framework9
 		bool AllocDevice();
 		void FreeDevice();
 	};
-};
+}
 
 #endif

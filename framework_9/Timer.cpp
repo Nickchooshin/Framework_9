@@ -1,6 +1,7 @@
 #include "Timer.h"
 
 #include "Time.h"
+#include "TimerHandle.h"
 
 namespace framework9
 {
@@ -8,7 +9,6 @@ namespace framework9
 
 	Timer::Timer()
 		: m_timerList()
-		, idCounter(1)
 	{
 	}
 	Timer::~Timer()
@@ -16,20 +16,20 @@ namespace framework9
 		RemoveAllTimer();
 	}
 
-	TimerID Timer::AddTimer(TimerCallback callback, float interval)
+	CTimerHandle Timer::AddTimer(TimerCallback callback, float interval)
 	{
 		TimerInfo newTimerInfo;
 		newTimerInfo.callback = callback;
 		newTimerInfo.interval = interval;
 		newTimerInfo.pause = false;
-		newTimerInfo.id = idCounter++;
+		newTimerInfo.handle = CTimerHandle::NewHandle();
 
 		m_timerList.push_back(newTimerInfo);
 
-		return newTimerInfo.id;
+		return newTimerInfo.handle;
 	}
 
-	void Timer::RemoveTimer(TimerID timerID)
+	void Timer::RemoveTimer(CTimerHandle timerHandle)
 	{
 		auto iter = m_timerList.begin();
 		auto iter_end = m_timerList.end();
@@ -38,7 +38,7 @@ namespace framework9
 		{
 			TimerInfo &timerInfo = *iter;
 
-			if (timerInfo.id == timerID)
+			if (timerInfo.handle == timerHandle)
 			{
 				m_timerList.erase(iter);
 				break;
@@ -51,11 +51,11 @@ namespace framework9
 		m_timerList.clear();
 	}
 
-	void Timer::ResumeTimer(TimerID timerID)
+	void Timer::ResumeTimer(CTimerHandle timerHandle)
 	{
 		for (auto &timerInfo : m_timerList)
 		{
-			if (timerInfo.id == timerID)
+			if (timerInfo.handle == timerHandle)
 			{
 				timerInfo.pause = false;
 				return;
@@ -63,11 +63,11 @@ namespace framework9
 		}
 	}
 
-	void Timer::PauseTimer(TimerID timerID)
+	void Timer::PauseTimer(CTimerHandle timerHandle)
 	{
 		for (auto &timerInfo : m_timerList)
 		{
-			if (timerInfo.id == timerID)
+			if (timerInfo.handle == timerHandle)
 			{
 				timerInfo.pause = true;
 				return;
