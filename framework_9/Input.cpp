@@ -116,16 +116,11 @@ namespace framework9
 		{
 			for (DWORD dwCurBuffer = 0; dwCurBuffer < m_dwItemsKeyboard; dwCurBuffer++)
 			{
-				if (m_didKeyboardBuffer[dwCurBuffer].dwData & 0x80)
-				{
-					CEventKeyboard event((KeyCode)m_didKeyboardBuffer[dwCurBuffer].dwOfs, true);
-					EventSender::GetInstance()->Send(&event);
-				}
-				else
-				{
-					CEventKeyboard event((KeyCode)m_didKeyboardBuffer[dwCurBuffer].dwOfs, false);
-					EventSender::GetInstance()->Send(&event);
-				}
+				bool isPressed = (m_didKeyboardBuffer[dwCurBuffer].dwData & 0x80) != 0;
+				KeyCode keycode = (KeyCode)m_didKeyboardBuffer[dwCurBuffer].dwOfs;
+
+				CEventKeyboard event(keycode, isPressed);
+				EventSender::GetInstance()->Send(&event);
 			}
 		}
 
@@ -182,48 +177,54 @@ namespace framework9
 			return E_FAIL;
 		}
 
-		int mouseDelta_X = 0;
-		int mouseDelta_Y = 0;
-		int mouseDelta_Z = 0;
-		int buttonCount = 0;
-		std::pair<MouseButton, bool> mouseButton[3];
+		bool isMouseMoved = false;
+		int mouseButtonNum = 0;
+
+		int mouseDeltaX = 0, mouseDeltaY = 0, mouseDeltaZ = 0;
+		std::pair<MouseButton, bool> mouseButtonBuffer[DINPUT_MOUSE_BUFFERSIZE];
 
 		if (m_dwItemsMouse)
 		{
 			for (DWORD dwCurBuffer = 0; dwCurBuffer < m_dwItemsMouse; dwCurBuffer++)
 			{
+				bool isPressed = (m_didMouseBuffer[dwCurBuffer].dwData & 0x80) != 0;
+				int mouseDelta = (int)m_didMouseBuffer[dwCurBuffer].dwData;
+
 				switch (m_didMouseBuffer[dwCurBuffer].dwOfs)
 				{
 				case DIMOFS_BUTTON0:
-					mouseButton[buttonCount++] = std::make_pair(MouseButton::LEFT_BUTTON, (m_didMouseBuffer[dwCurBuffer].dwData & 0x80) != 0);
+					mouseButtonBuffer[mouseButtonNum++] = std::make_pair(MouseButton::LEFT_BUTTON, isPressed);
 					break;
 				case DIMOFS_BUTTON1:
-					mouseButton[buttonCount++] = std::make_pair(MouseButton::RIGHT_BUTTON, (m_didMouseBuffer[dwCurBuffer].dwData & 0x80) != 0);
+					mouseButtonBuffer[mouseButtonNum++] = std::make_pair(MouseButton::RIGHT_BUTTON, isPressed);
 					break;
 				case DIMOFS_BUTTON2:
-					mouseButton[buttonCount++] = std::make_pair(MouseButton::MIDDLE_BUTTON, (m_didMouseBuffer[dwCurBuffer].dwData & 0x80) != 0);
+					mouseButtonBuffer[mouseButtonNum++] = std::make_pair(MouseButton::MIDDLE_BUTTON, isPressed);
 					break;
 				case DIMOFS_X:
-					mouseDelta_X += (int)m_didMouseBuffer[dwCurBuffer].dwData;
+					mouseDeltaX += mouseDelta;
+					isMouseMoved = true;
 					break;
 				case DIMOFS_Y:
-					mouseDelta_Y += (int)m_didMouseBuffer[dwCurBuffer].dwData;
+					mouseDeltaY += mouseDelta;
+					isMouseMoved = true;
 					break;
 				case DIMOFS_Z:
-					mouseDelta_Z += (int)m_didMouseBuffer[dwCurBuffer].dwData;
+					mouseDeltaZ += mouseDelta;
+					isMouseMoved = true;
 					break;
 				}
 			}
 
-			if (mouseDelta_X || mouseDelta_Y || mouseDelta_Z)
+			if (isMouseMoved)
 			{
-				CEventMouseMove event((float)mouseDelta_X, (float)mouseDelta_Y, (float)mouseDelta_Z);
+				CEventMouseMove event((float)mouseDeltaX, (float)mouseDeltaY, (float)mouseDeltaZ);
 				EventSender::GetInstance()->Send(&event);
 			}
 
-			for (int i = 0; i < buttonCount; i++)
+			for (int i = 0; i < mouseButtonNum; i++)
 			{
-				CEventMouseButton event(mouseButton[i].first, mouseButton[i].second);
+				CEventMouseButton event(mouseButtonBuffer[i].first, mouseButtonBuffer[i].second);
 				EventSender::GetInstance()->Send(&event);
 			}
 		}

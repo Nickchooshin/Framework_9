@@ -6,7 +6,7 @@
 #include "Time.h"
 #include "Input.h"
 
-#define WindowStyle WS_OVERLAPPED | WS_SYSMENU | WS_MINIMIZEBOX
+#define WindowStyle WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
 
 //#ifdef _DEBUG
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
@@ -46,14 +46,23 @@ namespace framework9
 		m_wndClassEx.hIconSm = nullptr;
 		RegisterClassEx(&m_wndClassEx);
 
-		int frameX = GetSystemMetrics(SM_CXFRAME);
-		int frameY = GetSystemMetrics(SM_CYFRAME);
-		int captionY = GetSystemMetrics(SM_CYCAPTION);
+		int screenX = GetSystemMetrics(SM_CXSCREEN);
+		int screenY = GetSystemMetrics(SM_CYSCREEN);
 
-		m_windowHandle = CreateWindowEx(0L, m_wndClassEx.lpszClassName, windowName,
-										WindowStyle,
-										CW_USEDEFAULT, CW_USEDEFAULT, width + (frameX << 1) - 10, height + (frameY << 1) + captionY - 10,
-										nullptr, nullptr, m_wndClassEx.hInstance, nullptr);
+		RECT windowRect;
+		ZeroMemory(&windowRect, sizeof(windowRect));
+		windowRect.left = (screenX - width) / 2;
+		windowRect.top = (screenY - height) / 2;
+		windowRect.right = windowRect.left + width;
+		windowRect.bottom = windowRect.top + height;
+		AdjustWindowRectEx(&windowRect, WindowStyle, 0, 0);
+
+		m_windowHandle = CreateWindowEx(
+			0L, m_wndClassEx.lpszClassName, windowName,
+			WindowStyle,
+			windowRect.left, windowRect.top, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top,
+			nullptr, nullptr, m_wndClassEx.hInstance, nullptr
+			);
 
 		m_width = width;
 		m_height = height;
