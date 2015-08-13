@@ -3,11 +3,11 @@
 
 #include "GameState.h"
 
-#include "Keycode.h"
-
 namespace framework9
 {
 	class CEventReceiver;
+
+	enum class KeyCode : unsigned char;
 }
 
 using namespace framework9;
@@ -30,6 +30,8 @@ public:
 	void Timer2(float dt);
 
 	void Keyboard(KeyCode keycode, bool isPressed);
+
+	void MouseMove(float x, float y, float z);
 };
 
 #endif

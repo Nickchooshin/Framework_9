@@ -20,7 +20,7 @@ namespace framework9
 		CEventReceiverKeyboard(std::function<void(KeyCode, bool)> callback);
 		~CEventReceiverKeyboard();
 
-		void Receive(CEvent *event);
+		void Receive(CEvent *event) override;
 	};
 }
 

@@ -84,6 +84,7 @@
     <ClCompile Include="CoreManager.cpp" />
     <ClCompile Include="Direct3DDevice.cpp" />
     <ClCompile Include="EventReceiverKeyboard.cpp" />
+    <ClCompile Include="EventReceiverMouse.cpp" />
     <ClCompile Include="EventSender.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -97,13 +98,16 @@
     <ClInclude Include="Direct3DDevice.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventKeyboard.h" />
+    <ClInclude Include="EventMouse.h" />
     <ClInclude Include="EventReceiver.h" />
     <ClInclude Include="EventReceiverKeyboard.h" />
+    <ClInclude Include="EventReceiverMouse.h" />
     <ClInclude Include="EventSender.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="Input.h" />
-    <ClInclude Include="Keycode.h" />
+    <ClInclude Include="KeyCode.h" />
+    <ClInclude Include="MouseButton.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Timer.h" />

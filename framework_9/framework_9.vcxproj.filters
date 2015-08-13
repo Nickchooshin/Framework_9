@@ -46,14 +46,25 @@
     <ClInclude Include="TimerHandle.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="Input.h" />
     <ClInclude Include="EventKeyboard.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="EventReceiverKeyboard.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="Keycode.h">
+    <ClInclude Include="KeyCode.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="EventMouse.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseButton.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="EventReceiverMouse.h">
       <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
@@ -82,8 +93,13 @@
     <ClCompile Include="TimerHandle.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="Input.cpp" />
     <ClCompile Include="EventReceiverKeyboard.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="EventReceiverMouse.cpp">
       <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>

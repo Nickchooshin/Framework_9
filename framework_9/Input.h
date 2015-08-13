@@ -15,9 +15,18 @@ namespace framework9
 	private:
 		LPDIRECTINPUT8 m_directInput;
 
+
+		// Keyboard
 		LPDIRECTINPUTDEVICE8 m_directInputKeyboard;
-		DIDEVICEOBJECTDATA m_didKeyboardBuffer[10];
+		DIDEVICEOBJECTDATA m_didKeyboardBuffer[DINPUT_KEYBOARD_BUFFERSIZE];
 		DWORD m_dwItemsKeyboard;
+
+		// Mouse
+		LPDIRECTINPUTDEVICE8 m_directInputMouse;
+		DIDEVICEOBJECTDATA m_didMouseBuffer[DINPUT_MOUSE_BUFFERSIZE];
+		DWORD m_dwItemsMouse;
+
+		// Joystick
 
 	public:
 		bool Init(HWND windowHandle);
@@ -28,9 +37,17 @@ namespace framework9
 		Input(const Input&);
 		~Input();
 
+		// Keyboard
 		bool InitKeyboard(HWND windowHandle);
-
 		HRESULT AcquiringKeyboard();
+
+		// Mouse
+		bool InitMouse(HWND windowHandle);
+		HRESULT AcquiringMouse();
+
+		// Joystick
+		bool InitJoystick(HWND windowHandle);
+		HRESULT AcquiringJoystick();
 
 		macro_singleton(Input);
 	};

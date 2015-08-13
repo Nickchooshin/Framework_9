@@ -69,7 +69,7 @@ namespace framework9
 		ShowWindow(m_windowHandle, SW_SHOWDEFAULT);
 		UpdateWindow(m_windowHandle);
 
-		CoreManager::GetInstance()->SetDevice(m_direct3DDevice, m_width, m_height);
+		CoreManager::GetInstance()->SetDevice(m_direct3DDevice, (float)m_width, (float)m_height);
 		GameStateManager::GetInstance()->PushGameState(gameState);
 		//
 		Input::GetInstance()->Init(m_windowHandle);

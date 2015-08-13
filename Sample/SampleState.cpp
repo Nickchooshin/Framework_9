@@ -5,6 +5,9 @@
 #include "EventSender.h"
 #include "EventReceiverKeyboard.h"
 
+//
+#include "EventReceiverMouse.h"
+
 #include <stdio.h>
 
 SampleState::SampleState()
@@ -27,6 +30,11 @@ void SampleState::Init()
 	//
 	m_eventReceiver = new CEventReceiverKeyboard(CreateKeyboardCallback(SampleState::Keyboard));
 	EventSender::GetInstance()->AddEventReceiver(m_eventReceiver);
+
+	//
+	CEventReceiverMouse *eventReceiverMouse = new CEventReceiverMouse;
+	eventReceiverMouse->SetMovedCallback(CreateMouseMovedCallback(SampleState::MouseMove));
+	EventSender::GetInstance()->AddEventReceiver(eventReceiverMouse);
 }
 
 void SampleState::Destroy()
@@ -52,4 +60,9 @@ void SampleState::Timer2(float dt)
 void SampleState::Keyboard(KeyCode keycode, bool isPressed)
 {
 	printf("%d %s\n", keycode, isPressed ? "Pressed" : "Released");
+}
+
+void SampleState::MouseMove(float x, float y, float z)
+{
+	printf("Mouse %f %f %f\n", x, y, z);
 }
