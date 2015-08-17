@@ -19,24 +19,24 @@ namespace framework9
 	void EventSender::AddEventReceiver(CEventReceiver *eventReceiver)
 	{
 		EventType receiverType = eventReceiver->GetReceiverType();
-		VectorEventReceiver *receiverList;
+		VectorEventReceiver *receiverVector;
 
-		auto iter = m_eventReceiverMap.find(receiverType);
-		if (iter == m_eventReceiverMap.end())
+		auto mapIter = m_eventReceiverMap.find(receiverType);
+		if (mapIter == m_eventReceiverMap.end())
 		{
-			receiverList = new VectorEventReceiver;
-			auto pair = std::make_pair(receiverType, receiverList);
+			receiverVector = new VectorEventReceiver;
+			auto pair = std::make_pair(receiverType, receiverVector);
 			m_eventReceiverMap.insert(pair);
 		}
 		else
-			receiverList = iter->second;
+			receiverVector = mapIter->second;
 
-		for (auto receiver : *receiverList)
+		for (auto receiverIter : *receiverVector)
 		{
-			if (receiver == eventReceiver)
+			if (receiverIter == eventReceiver)
 				return;
 		}
-		receiverList->push_back(eventReceiver);
+		receiverVector->push_back(eventReceiver);
 	}
 
 	void EventSender::RemoveEventReceiver(CEventReceiver *eventReceiver)
@@ -45,19 +45,19 @@ namespace framework9
 			return;
 
 		EventType receiverType = eventReceiver->GetReceiverType();
-		VectorEventReceiver *receiverList;
+		VectorEventReceiver *receiverVector;
 
-		auto iter = m_eventReceiverMap.find(receiverType);
-		if (iter != m_eventReceiverMap.end())
+		auto mapIter = m_eventReceiverMap.find(receiverType);
+		if (mapIter != m_eventReceiverMap.end())
 		{
-			receiverList = iter->second;
+			receiverVector = mapIter->second;
 
-			auto iter_remove = std::find(receiverList->begin(), receiverList->end(), eventReceiver);
-			if (iter_remove != receiverList->end())
+			auto receiverIter = std::find(receiverVector->begin(), receiverVector->end(), eventReceiver);
+			if (receiverIter != receiverVector->end())
 			{
-				delete *iter_remove;
-				*iter_remove = nullptr;
-				receiverList->erase(iter_remove);
+				delete *receiverIter;
+				*receiverIter = nullptr;
+				receiverVector->erase(receiverIter);
 			}
 		}
 	}
@@ -66,27 +66,28 @@ namespace framework9
 	{
 		for (auto receiverMap : m_eventReceiverMap)
 		{
-			VectorEventReceiver *receiverList = receiverMap.second;
-			for (auto receiver : *receiverList)
+			VectorEventReceiver *receiverVector = receiverMap.second;
+			for (auto receiver : *receiverVector)
 			{
 				delete receiver;
 			}
-			receiverList->clear();
-			delete receiverList;
+			receiverVector->clear();
+			delete receiverVector;
 		}
+		m_eventReceiverMap.clear();
 	}
 
 	void EventSender::Send(CEvent *event)
 	{
 		EventType eventType = event->GetEventType();
 
-		auto iter = m_eventReceiverMap.find(eventType);
-		if (iter != m_eventReceiverMap.end())
+		auto mapIter = m_eventReceiverMap.find(eventType);
+		if (mapIter != m_eventReceiverMap.end())
 		{
-			VectorEventReceiver *receiverList = iter->second;
-			for (auto receiver : *receiverList)
+			VectorEventReceiver *receiverVector = mapIter->second;
+			for (auto receiverIter : *receiverVector)
 			{
-				receiver->Receive(event);
+				receiverIter->Receive(event);
 			}
 		}
 	}

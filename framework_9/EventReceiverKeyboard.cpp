@@ -5,19 +5,24 @@
 
 namespace framework9
 {
-	CEventReceiverKeyboard::CEventReceiverKeyboard(std::function<void(KeyCode, bool)> callback)
+	CEventReceiverKeyboard::CEventReceiverKeyboard()
 		: CEventReceiver(EventType::KEYBOARD)
-		, m_callback(callback)
+		, m_keyboardCallback(nullptr)
 	{
 	}
 	CEventReceiverKeyboard::~CEventReceiverKeyboard()
 	{
 	}
 
+	void CEventReceiverKeyboard::SetKeyboardCallback(std::function<void(KeyCode, bool)> callback)
+	{
+		m_keyboardCallback = callback;
+	}
+
 	void CEventReceiverKeyboard::Receive(CEvent *event)
 	{
 		CEventKeyboard *eventKeyboard = (CEventKeyboard*)event;
 
-		m_callback(eventKeyboard->GetKeyCode(), eventKeyboard->IsPressed());
+		m_keyboardCallback(eventKeyboard->GetKeyCode(), eventKeyboard->IsPressed());
 	}
 }

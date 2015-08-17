@@ -4,8 +4,6 @@
 #include "Timer.h"
 #include "EventSender.h"
 #include "EventReceiverKeyboard.h"
-
-//
 #include "EventReceiverMouse.h"
 
 #include <stdio.h>
@@ -27,11 +25,10 @@ void SampleState::Init()
 	Timer::GetInstance()->RemoveTimer(timer3);
 	Timer::GetInstance()->PauseTimer(timer2);
 
-	//
-	m_eventReceiver = new CEventReceiverKeyboard(CreateKeyboardCallback(SampleState::Keyboard));
+	m_eventReceiver = new CEventReceiverKeyboard;
+	((CEventReceiverKeyboard*)(m_eventReceiver))->SetKeyboardCallback(CreateKeyboardCallback(SampleState::Keyboard));
 	EventSender::GetInstance()->AddEventReceiver(m_eventReceiver);
 
-	//
 	CEventReceiverMouse *eventReceiverMouse = new CEventReceiverMouse;
 	eventReceiverMouse->SetMovedCallback(CreateMouseMovedCallback(SampleState::MouseMove));
 	EventSender::GetInstance()->AddEventReceiver(eventReceiverMouse);

@@ -11,6 +11,7 @@ namespace framework9
 
 	Input::Input()
 		: m_directInput(nullptr)
+		, m_windowHandle(nullptr)
 		, m_directInputKeyboard(nullptr)
 		, m_dwItemsKeyboard(0)
 		, m_directInputMouse(nullptr)
@@ -32,6 +33,14 @@ namespace framework9
 			m_directInputKeyboard->Release();
 			m_directInputKeyboard = nullptr;
 		}
+
+		// Mouse
+		if (!m_directInputMouse)
+		{
+			m_directInputMouse->Unacquire();
+			m_directInputMouse->Release();
+			m_directInputMouse = nullptr;
+		}
 	}
 
 	bool Input::Init(HWND windowHandle)
@@ -45,11 +54,16 @@ namespace framework9
 				MessageBox(NULL, L"DirectInput8Create Fail", L"Error", MB_OK | MB_ICONERROR);
 				return false;
 			}
+		}
 
-			if (!InitKeyboard(windowHandle))
+		if (m_windowHandle != windowHandle)
+		{
+			m_windowHandle = windowHandle;
+
+			if (!InitKeyboard())
 				return false;
 
-			if (!InitMouse(windowHandle))
+			if (!InitMouse())
 				return false;
 		}
 
@@ -63,35 +77,38 @@ namespace framework9
 	}
 
 	// Keyboard
-	bool Input::InitKeyboard(HWND windowHandle)
+	bool Input::InitKeyboard()
 	{
-		if (FAILED(m_directInput->CreateDevice(GUID_SysKeyboard, &m_directInputKeyboard, nullptr)))
+		if (!m_directInputKeyboard)
 		{
-			MessageBox(NULL, L"Keyboard CreateDevice Fail", L"Error", MB_OK | MB_ICONERROR);
-			return false;
+			if (FAILED(m_directInput->CreateDevice(GUID_SysKeyboard, &m_directInputKeyboard, nullptr)))
+			{
+				MessageBox(NULL, L"Keyboard CreateDevice Fail", L"Error", MB_OK | MB_ICONERROR);
+				return false;
+			}
+
+			DIPROPDWORD dipDW;
+			ZeroMemory(&dipDW, sizeof(DIPROPDWORD));
+			dipDW.diph.dwSize = sizeof(DIPROPDWORD);
+			dipDW.diph.dwHeaderSize = sizeof(DIPROPHEADER);
+			dipDW.diph.dwObj = 0;
+			dipDW.diph.dwHow = DIPH_DEVICE;
+			dipDW.dwData = DINPUT_KEYBOARD_BUFFERSIZE;
+
+			if (FAILED(m_directInputKeyboard->SetProperty(DIPROP_BUFFERSIZE, &dipDW.diph)))
+			{
+				MessageBox(NULL, L"Keyboard SetProperty Fail", L"Error", MB_OK | MB_ICONERROR);
+				return false;
+			}
+
+			if (FAILED(m_directInputKeyboard->SetDataFormat(&c_dfDIKeyboard)))
+			{
+				MessageBox(NULL, L"Keyboard SetDataFormat Fail", L"Error", MB_OK | MB_ICONERROR);
+				return false;
+			}
 		}
 
-		DIPROPDWORD dipDW;
-		ZeroMemory(&dipDW, sizeof(DIPROPDWORD));
-		dipDW.diph.dwSize = sizeof(DIPROPDWORD);
-		dipDW.diph.dwHeaderSize = sizeof(DIPROPHEADER);
-		dipDW.diph.dwObj = 0;
-		dipDW.diph.dwHow = DIPH_DEVICE;
-		dipDW.dwData = DINPUT_KEYBOARD_BUFFERSIZE;
-
-		if (FAILED(m_directInputKeyboard->SetProperty(DIPROP_BUFFERSIZE, &dipDW.diph)))
-		{
-			MessageBox(NULL, L"Keyboard SetProperty Fail", L"Error", MB_OK | MB_ICONERROR);
-			return false;
-		}
-
-		if (FAILED(m_directInputKeyboard->SetDataFormat(&c_dfDIKeyboard)))
-		{
-			MessageBox(NULL, L"Keyboard SetDataFormat Fail", L"Error", MB_OK | MB_ICONERROR);
-			return false;
-		}
-
-		if (FAILED(m_directInputKeyboard->SetCooperativeLevel(windowHandle, DISCL_EXCLUSIVE | DISCL_FOREGROUND)))
+		if (FAILED(m_directInputKeyboard->SetCooperativeLevel(m_windowHandle, DISCL_EXCLUSIVE | DISCL_FOREGROUND)))
 		{
 			MessageBox(NULL, L"Keyboard SetCooperativeLevel Fail", L"Error", MB_OK | MB_ICONERROR);
 			return false;
@@ -128,35 +145,38 @@ namespace framework9
 	}
 
 	// Mouse
-	bool Input::InitMouse(HWND windowHandle)
+	bool Input::InitMouse()
 	{
-		if (FAILED(m_directInput->CreateDevice(GUID_SysMouse, &m_directInputMouse, nullptr)))
+		if (!m_directInputMouse)
 		{
-			MessageBox(NULL, L"Mouse CreateDevice Fail", L"Error", MB_OK | MB_ICONERROR);
-			return false;
+			if (FAILED(m_directInput->CreateDevice(GUID_SysMouse, &m_directInputMouse, nullptr)))
+			{
+				MessageBox(NULL, L"Mouse CreateDevice Fail", L"Error", MB_OK | MB_ICONERROR);
+				return false;
+			}
+
+			DIPROPDWORD dipDW;
+			ZeroMemory(&dipDW, sizeof(DIPROPDWORD));
+			dipDW.diph.dwSize = sizeof(DIPROPDWORD);
+			dipDW.diph.dwHeaderSize = sizeof(DIPROPHEADER);
+			dipDW.diph.dwObj = 0;
+			dipDW.diph.dwHow = DIPH_DEVICE;
+			dipDW.dwData = DINPUT_MOUSE_BUFFERSIZE;
+
+			if (FAILED(m_directInputMouse->SetProperty(DIPROP_BUFFERSIZE, &dipDW.diph)))
+			{
+				MessageBox(NULL, L"Mouse SetProperty Fail", L"Error", MB_OK | MB_ICONERROR);
+				return false;
+			}
+
+			if (FAILED(m_directInputMouse->SetDataFormat(&c_dfDIMouse)))
+			{
+				MessageBox(NULL, L"Mouse SetDataFormat Fail", L"Error", MB_OK | MB_ICONERROR);
+				return false;
+			}
 		}
 
-		DIPROPDWORD dipDW;
-		ZeroMemory(&dipDW, sizeof(DIPROPDWORD));
-		dipDW.diph.dwSize = sizeof(DIPROPDWORD);
-		dipDW.diph.dwHeaderSize = sizeof(DIPROPHEADER);
-		dipDW.diph.dwObj = 0;
-		dipDW.diph.dwHow = DIPH_DEVICE;
-		dipDW.dwData = DINPUT_MOUSE_BUFFERSIZE;
-
-		if (FAILED(m_directInputMouse->SetProperty(DIPROP_BUFFERSIZE, &dipDW.diph)))
-		{
-			MessageBox(NULL, L"Mouse SetProperty Fail", L"Error", MB_OK | MB_ICONERROR);
-			return false;
-		}
-
-		if (FAILED(m_directInputMouse->SetDataFormat(&c_dfDIMouse)))
-		{
-			MessageBox(NULL, L"Mouse SetDataFormat Fail", L"Error", MB_OK | MB_ICONERROR);
-			return false;
-		}
-
-		if (FAILED(m_directInputMouse->SetCooperativeLevel(windowHandle, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND))) // DISCL_EXCLUSIVE, DISCL_NONEXCLUSIVE
+		if (FAILED(m_directInputMouse->SetCooperativeLevel(m_windowHandle, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND))) // DISCL_EXCLUSIVE, DISCL_NONEXCLUSIVE
 		{
 			MessageBox(NULL, L"Mouse SetCooperativeLevel Fail", L"Error", MB_OK | MB_ICONERROR);
 			return false;

@@ -14,11 +14,13 @@ namespace framework9
 	class CEventReceiverKeyboard : public CEventReceiver
 	{
 	private:
-		std::function<void(KeyCode, bool)> m_callback;
+		std::function<void(KeyCode, bool)> m_keyboardCallback;
 
 	public:
-		CEventReceiverKeyboard(std::function<void(KeyCode, bool)> callback);
+		CEventReceiverKeyboard();
 		~CEventReceiverKeyboard();
+
+		void SetKeyboardCallback(std::function<void(KeyCode, bool)> callback);
 
 		void Receive(CEvent *event) override;
 	};

@@ -80,9 +80,7 @@ namespace framework9
 
 		CoreManager::GetInstance()->SetDevice(m_direct3DDevice, (float)m_width, (float)m_height);
 		GameStateManager::GetInstance()->PushGameState(gameState);
-		//
 		Input::GetInstance()->Init(m_windowHandle);
-		//
 
 		{
 			MSG msg;

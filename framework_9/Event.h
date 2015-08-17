@@ -5,9 +5,9 @@ namespace framework9
 {
 	enum class EventType : unsigned short
 	{
-		NONE = 0U,
-		KEYBOARD,
+		KEYBOARD = 0U,
 		MOUSE,
+		JOYSTICK,
 	};
 
 	class CEvent

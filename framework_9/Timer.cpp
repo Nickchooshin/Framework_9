@@ -18,23 +18,22 @@ namespace framework9
 
 	CTimerHandle Timer::AddTimer(TimerCallback callback, float interval)
 	{
-		TimerInfo newTimerInfo;
-		newTimerInfo.callback = callback;
-		newTimerInfo.interval = interval;
-		newTimerInfo.pause = false;
-		newTimerInfo.handle = CTimerHandle::NewHandle();
+		TimerInfo timerInfo;
+		timerInfo.callback = callback;
+		timerInfo.interval = interval;
+		timerInfo.pause = false;
+		timerInfo.handle = CTimerHandle::NewHandle();
 
-		m_timerList.push_back(newTimerInfo);
+		m_timerList.push_back(timerInfo);
 
-		return newTimerInfo.handle;
+		return timerInfo.handle;
 	}
 
 	void Timer::RemoveTimer(CTimerHandle timerHandle)
 	{
-		auto iter = m_timerList.begin();
-		auto iter_end = m_timerList.end();
+		auto iterEnd = m_timerList.end();
 
-		for (; iter != iter_end; iter++)
+		for (auto iter = m_timerList.begin(); iter != iterEnd; iter++)
 		{
 			TimerInfo &timerInfo = *iter;
 

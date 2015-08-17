@@ -14,7 +14,7 @@ namespace framework9
 	{
 	private:
 		LPDIRECTINPUT8 m_directInput;
-
+		HWND m_windowHandle;
 
 		// Keyboard
 		LPDIRECTINPUTDEVICE8 m_directInputKeyboard;
@@ -38,15 +38,15 @@ namespace framework9
 		~Input();
 
 		// Keyboard
-		bool InitKeyboard(HWND windowHandle);
+		bool InitKeyboard();
 		HRESULT AcquiringKeyboard();
 
 		// Mouse
-		bool InitMouse(HWND windowHandle);
+		bool InitMouse();
 		HRESULT AcquiringMouse();
 
 		// Joystick
-		bool InitJoystick(HWND windowHandle);
+		bool InitJoystick();
 		HRESULT AcquiringJoystick();
 
 		macro_singleton(Input);
