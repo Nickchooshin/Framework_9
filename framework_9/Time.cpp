@@ -5,7 +5,9 @@ namespace framework9
 	macro_singleton2(Time);
 
 	Time::Time()
-		: m_lastTime()
+		: m_startTime()
+		, m_lastTime()
+		, time(0.0f)
 		, deltaTime(0.0f)
 	{
 	}
@@ -15,15 +17,21 @@ namespace framework9
 
 	void Time::Init()
 	{
-		m_lastTime = std::chrono::system_clock::now();
+		m_startTime = std::chrono::system_clock::now();
+		m_lastTime = m_startTime;
 	}
 
-	void Time::CalculateDeltaTime()
+	void Time::CalculateTime()
 	{
-		std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
-		std::chrono::duration<float> time = now - m_lastTime;
+		std::chrono::system_clock::time_point nowTime = std::chrono::system_clock::now();
+		std::chrono::duration<float> durationTime;
 
-		deltaTime = time.count();
-		m_lastTime = now;
+		durationTime = nowTime - m_lastTime;
+		deltaTime = durationTime.count();
+
+		durationTime = nowTime - m_startTime;
+		time = durationTime.count();
+
+		m_lastTime = nowTime;
 	}
 }

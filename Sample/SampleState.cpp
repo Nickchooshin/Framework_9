@@ -6,14 +6,23 @@
 #include "EventReceiverKeyboard.h"
 #include "EventReceiverMouse.h"
 
+#include "Light.h"
+
 #include <stdio.h>
 
 SampleState::SampleState()
 	: m_eventReceiver(nullptr)
+	, m_ambient(nullptr)
+	, m_light(nullptr)
 {
 }
 SampleState::~SampleState()
 {
+	if (m_ambient)
+		delete m_ambient;
+
+	if (m_light)
+		delete m_light;
 }
 
 void SampleState::Init()
@@ -32,6 +41,13 @@ void SampleState::Init()
 	CEventReceiverMouse *eventReceiverMouse = new CEventReceiverMouse;
 	eventReceiverMouse->SetMovedCallback(CreateMouseMovedCallback(SampleState::MouseMove));
 	EventSender::GetInstance()->AddEventReceiver(eventReceiverMouse);
+
+	m_ambient = new CLight();
+	m_ambient->Init(LightType::AMBIENT);
+	m_ambient->SetDiffuse(0.5f, 0.5f, 0.5f);
+
+	m_light = new CLight();
+	m_light->Init(LightType::DIRECTIONAL);
 }
 
 void SampleState::Destroy()

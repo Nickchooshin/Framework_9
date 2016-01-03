@@ -6,6 +6,8 @@ namespace framework9
 	class IGameState
 	{
 	public:
+		virtual ~IGameState() {}
+
 		virtual void Init() = 0;
 		virtual void Destroy() = 0;
 

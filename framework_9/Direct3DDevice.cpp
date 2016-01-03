@@ -73,12 +73,19 @@ namespace framework9
 			}
 		}
 
+		SetRenderState();
+
 		return true;
+	}
+
+	LPDIRECT3DDEVICE9 CDirect3DDevice::GetDirect3DDevice() const
+	{
+		return m_direct3DDevice;
 	}
 
 	void CDirect3DDevice::BeginDraw()
 	{
-		m_direct3DDevice->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+		m_direct3DDevice->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
 
 		m_direct3DDevice->BeginScene();
 	}
@@ -88,5 +95,18 @@ namespace framework9
 		m_direct3DDevice->EndScene();
 
 		m_direct3DDevice->Present(nullptr, nullptr, nullptr, nullptr);
+	}
+
+	void CDirect3DDevice::SetRenderState()
+	{
+		m_direct3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);	// 버텍스 컬링 시계방향
+		m_direct3DDevice->SetRenderState(D3DRS_DITHERENABLE, FALSE); // 디더링 여부 (https://ko.wikipedia.org/wiki/%EB%94%94%EB%8D%94%EB%A7%81)
+		m_direct3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE); // 광원
+		m_direct3DDevice->SetRenderState(D3DRS_SPECULARENABLE, TRUE); // 재질 광원? 스펙큐러 하이라이트
+		m_direct3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE); // Z 버퍼
+		m_direct3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE); // Z 버퍼 2D 관련??		어플리케이션에 의한 깊이 버퍼에의 쓰기
+		m_direct3DDevice->SetRenderState(D3DRS_ANTIALIASEDLINEENABLE, FALSE); // 안티앨리어싱 렌더링
+
+		//m_direct3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME); // 와이어 프레임
 	}
 }

@@ -10,6 +10,12 @@
     <Filter Include="Core">
       <UniqueIdentifier>{041bba9c-8df4-440a-85f9-422c23c5ee7e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Geometry">
+      <UniqueIdentifier>{2f17e68e-a55c-48df-b6c1-862cfab9ed3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Light">
+      <UniqueIdentifier>{6c8304e8-8c76-4d46-9f22-3afb0d258158}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Time.h">
@@ -67,6 +73,26 @@
     <ClInclude Include="EventReceiverMouse.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="Geometry.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct3DObject.h" />
+    <ClInclude Include="Vector3.h" />
+    <ClInclude Include="Plane.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Time.cpp">
@@ -101,6 +127,20 @@
     </ClCompile>
     <ClCompile Include="EventReceiverMouse.cpp">
       <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Cube.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct3DObject.cpp" />
+    <ClCompile Include="Vector3.cpp" />
+    <ClCompile Include="Plane.cpp">
+      <Filter>Geometry</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

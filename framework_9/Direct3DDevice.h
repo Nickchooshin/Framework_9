@@ -17,10 +17,14 @@ namespace framework9
 
 		static CDirect3DDevice* Create(HWND windowHandle, int width, int height);
 
+		LPDIRECT3DDEVICE9 GetDirect3DDevice() const;
+
 		void BeginDraw();
 		void EndDraw();
 	private:
 		bool Init(HWND windowHandle, int width, int height);
+
+		void SetRenderState();
 	};
 }
 

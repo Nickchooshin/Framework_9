@@ -95,7 +95,7 @@ namespace framework9
 					DispatchMessage(&msg);
 				}
 
-				Time::GetInstance()->CalculateDeltaTime();
+				Time::GetInstance()->CalculateTime();
 				Input::GetInstance()->Acquiring();
 				CoreManager::GetInstance()->Loop();
 			}
@@ -104,6 +104,7 @@ namespace framework9
 			FreeDevice();
 		}
 
+		GameStateManager::GetInstance()->ClearAllState();
 		CoreManager::GetInstance()->RemoveDevice();
 	}
 

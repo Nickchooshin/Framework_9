@@ -6,6 +6,7 @@
 namespace framework9
 {
 	class CEventReceiver;
+	class CLight;
 
 	enum class KeyCode : unsigned char;
 }
@@ -16,6 +17,8 @@ class SampleState : public IGameState
 {
 private:
 	CEventReceiver *m_eventReceiver;
+	CLight *m_ambient;
+	CLight *m_light;
 
 public:
 	SampleState();

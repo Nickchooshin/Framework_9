@@ -11,8 +11,10 @@ namespace framework9
 	class Time
 	{
 	private:
+		std::chrono::system_clock::time_point m_startTime;
 		std::chrono::system_clock::time_point m_lastTime;
 	public:
+		float time;
 		float deltaTime;
 
 	private:
@@ -21,7 +23,7 @@ namespace framework9
 		~Time();
 	public:
 		void Init();
-		void CalculateDeltaTime();
+		void CalculateTime();
 
 		macro_singleton(Time);
 	};
