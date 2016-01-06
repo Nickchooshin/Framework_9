@@ -42,5 +42,7 @@ namespace framework9
 		direct3DDevice->BeginDraw();
 
 		direct3DDevice->EndDraw();
+
+		GameStateManager::GetInstance()->StateStackUpdate();
 	}
 }

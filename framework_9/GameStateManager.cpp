@@ -17,17 +17,12 @@ namespace framework9
 
 	void GameStateManager::PushGameState(IGameState *gameState)
 	{
-		gameState->Init();
-		m_stateStack.push_back(gameState);
+		m_commandQueue.emplace(GameStateCommand::Type::PUSH, gameState);
 	}
 
 	void GameStateManager::PopGameState()
 	{
-		IGameState *gameState = m_stateStack.back();
-
-		m_stateStack.pop_back();
-		gameState->Destroy();
-		delete gameState;
+		m_commandQueue.emplace(GameStateCommand::Type::POP);
 	}
 
 	void GameStateManager::ChangeGameState(IGameState *gameState)
@@ -43,6 +38,31 @@ namespace framework9
 
 		IGameState *gameState = m_stateStack.back();
 		gameState->Update();
+	}
+
+	void GameStateManager::StateStackUpdate()
+	{
+		while (!m_commandQueue.empty())
+		{
+			GameStateCommand &command = m_commandQueue.front();
+
+			switch (command.type)
+			{
+			case GameStateCommand::Type::PUSH:
+				command.gameState->Init();
+				m_stateStack.push_back(command.gameState);
+				break;
+
+			case GameStateCommand::Type::POP:
+				command.gameState = m_stateStack.back();
+				command.gameState->Destroy();
+				delete command.gameState;
+				m_stateStack.pop_back();
+				break;
+			}
+
+			m_commandQueue.pop();
+		}
 	}
 
 	void GameStateManager::ClearAllState()
