@@ -10,8 +10,6 @@
 #include "Light.h"
 #include "Plane.h"
 
-#include "Time.h"
-
 framework9::CCamera Camera;
 framework9::CCube Cube;
 framework9::CPlane Plane;

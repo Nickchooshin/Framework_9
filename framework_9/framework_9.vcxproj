@@ -90,6 +90,7 @@
     <ClCompile Include="EventReceiverMouse.cpp" />
     <ClCompile Include="EventSender.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
+    <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Plane.cpp" />

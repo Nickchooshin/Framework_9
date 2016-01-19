@@ -18,46 +18,18 @@ namespace framework9
 		Vector3 m_rotation;
 
 	public:
-		CGeometry()
-			: CDirect3DObject()
-			, m_vertexBuffer(nullptr)
-			, m_indexBuffer(nullptr)
-			, m_material()
-			, m_texture(nullptr)
-			, m_position()
-			, m_rotation()
-		{}
-		virtual ~CGeometry()
-		{
-			if (m_vertexBuffer)
-			{
-				m_vertexBuffer->Release();
-				m_vertexBuffer = nullptr;
-			}
-
-			if (m_indexBuffer)
-			{
-				m_indexBuffer->Release();
-				m_indexBuffer = nullptr;
-			}
-
-			if (m_texture)
-			{
-				m_texture->Release();
-				m_texture = nullptr;
-			}
-		}
+		CGeometry();
+		virtual ~CGeometry();
 
 		virtual bool Init() = 0;
 
-		void SetTexture(const wchar_t *textureName)
-		{
-			if (FAILED(D3DXCreateTextureFromFile(direct3DDevice, textureName, &m_texture)))
-			{
-				MessageBox(nullptr, L"D3DXCreateTextureFromFile fail", L"Error", MB_OK | MB_ICONERROR);
-				return;
-			}
-		}
+		void SetPosition(Vector3 position);
+		void SetPosition(float x, float y, float z);
+		void SetRotation(Vector3 rotation);
+		void SetRotation(float x, float y, float z);
+		void SetTexture(const wchar_t *textureName);
+
+		virtual void Render() = 0;
 	};
 }
 

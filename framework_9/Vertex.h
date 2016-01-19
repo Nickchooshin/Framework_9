@@ -7,7 +7,7 @@ struct Vertex
 {
 	D3DXVECTOR3 position;
 	D3DXVECTOR3 normal;
-	DWORD color;
+	D3DCOLOR color;
 	float tu, tv;
 };
 

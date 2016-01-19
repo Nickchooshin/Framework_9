@@ -13,7 +13,8 @@ namespace framework9
 		CCamera();
 		~CCamera();
 
-		bool Init();
+		// fov is angle(not radian)
+		bool Init(float fov = 60.0f);
 	};
 }
 

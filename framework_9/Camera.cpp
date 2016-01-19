@@ -14,7 +14,7 @@ namespace framework9
 	{
 	}
 
-	bool CCamera::Init()
+	bool CCamera::Init(float fov)
 	{
 		D3DXVECTOR3 vEyePt(0.0f, 3.0f, 2.0f);	// 카메라의 위치
 		D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);	// 카메라의 시선
@@ -23,9 +23,15 @@ namespace framework9
 		D3DXMatrixLookAtRH(&matView, &vEyePt, &vLookatPt, &vUpVec);
 		direct3DDevice->SetTransform(D3DTS_VIEW, &matView);
 
+		// * issue 2
+		// 종횡비(가로/세로)의 화면 크기를 어디서, 어떻게 가져오느냐
+		// 투영(fov와 종횡비), 뷰포트에 대하여. 과연 카메라에서 설정해야 하는가?
 		D3DXMATRIXA16 matProj;
-		D3DXMatrixPerspectiveFovRH(&matProj, D3DX_PI / 3.0f, (4.0f / 3.0f), 0.0f, 100.0f);	// 0.0f ~ 100.0f 클리핑 영역
+		D3DXMatrixPerspectiveFovRH(&matProj, D3DX_PI / (180.0f / fov), (4.0f / 3.0f), 1.0f, 100.0f);	// 1.0f ~ 100.0f 클리핑 영역
 		direct3DDevice->SetTransform(D3DTS_PROJECTION, &matProj);
+
+		D3DVIEWPORT9 viewport = { 0, 0, 640, 480, 0.0f, 1.0f };
+		direct3DDevice->SetViewport(&viewport);
 
 		return true;
 	}

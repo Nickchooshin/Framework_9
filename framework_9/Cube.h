@@ -13,12 +13,7 @@ namespace framework9
 
 		bool Init() override;
 
-		void SetPosition(Vector3 position);
-		void SetPosition(float x, float y, float z);
-		void SetRotation(Vector3 rotation);
-		void SetRotation(float x, float y, float z);
-
-		void Render();
+		void Render() override;
 	};
 }
 

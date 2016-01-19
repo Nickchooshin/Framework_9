@@ -20,7 +20,7 @@ namespace framework9
 		}
 
 		Vertex *vertices;
-		if (FAILED(m_vertexBuffer->Lock(0, sizeof(Vertex), (void**)&vertices, 0)))
+		if (FAILED(m_vertexBuffer->Lock(0, 0, (void**)&vertices, 0)))
 		{
 			MessageBox(nullptr, L"Vertex Lock Fail", L"Error", MB_OK | MB_ICONERROR);
 			return false;
@@ -69,7 +69,7 @@ namespace framework9
 		}
 
 		Index *indices;
-		if (FAILED(m_indexBuffer->Lock(0, sizeof(Vertex), (void**)&indices, 0)))
+		if (FAILED(m_indexBuffer->Lock(0, 0, (void**)&indices, 0)))
 		{
 			MessageBox(nullptr, L"Index Lock Fail", L"Error", MB_OK | MB_ICONERROR);
 			return false;
@@ -81,29 +81,6 @@ namespace framework9
 		m_indexBuffer->Unlock();
 
 		return true;
-	}
-
-	void CPlane::SetPosition(Vector3 position)
-	{
-		m_position = position;
-	}
-
-	void CPlane::SetPosition(float x, float y, float z)
-	{
-		m_position = { x, y, z };
-	}
-
-	void CPlane::SetRotation(Vector3 rotation)
-	{
-		m_rotation = rotation;
-
-		m_rotation = (m_rotation / 180.0f) * D3DX_PI;
-	}
-
-	void CPlane::SetRotation(float x, float y, float z)
-	{
-		m_rotation = { x, y, z };
-		m_rotation = (m_rotation / 180.0f) * D3DX_PI;
 	}
 
 	void CPlane::Render()
