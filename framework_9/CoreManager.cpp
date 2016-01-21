@@ -9,10 +9,12 @@
 #include "Camera.h"
 #include "Light.h"
 #include "Plane.h"
+#include "Texture.h"
 
 framework9::CCamera Camera;
 framework9::CCube Cube;
 framework9::CPlane Plane;
+framework9::CTexture Texture;
 
 namespace framework9
 {
@@ -39,8 +41,9 @@ namespace framework9
 		Camera.Init();
 		Cube.Init();
 		Plane.Init();
+		Texture.CreateTexture(L"sample.png");
 
-		Cube.SetTexture(L"sample.png");
+		Cube.SetTexture(&Texture);
 		//Cube.SetPosition(0.5f, 0.0f, 0.0f);
 		//Cube.SetRotation(45.0f, 25.0f, 0.0f);
 		Cube.SetRotation(0.0f, 45.0f, 0.0f);

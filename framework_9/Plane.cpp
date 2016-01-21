@@ -1,4 +1,5 @@
 #include "Plane.h"
+#include "Texture.h"
 
 namespace framework9
 {
@@ -110,7 +111,12 @@ namespace framework9
 		direct3DDevice->SetMaterial(&material);
 		//
 
-		direct3DDevice->SetTexture(0, m_texture);
+		TCHAR str[1024] = { TEXT("") };
+
+		if (m_texture)
+			m_texture->SetTexture(0);
+		else
+			direct3DDevice->SetTexture(0, nullptr);
 
 		direct3DDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
 		direct3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);

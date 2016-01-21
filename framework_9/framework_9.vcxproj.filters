@@ -16,6 +16,9 @@
     <Filter Include="Light">
       <UniqueIdentifier>{6c8304e8-8c76-4d46-9f22-3afb0d258158}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Texture">
+      <UniqueIdentifier>{c6d73d81-bb75-43b9-93e8-ff4d31fee987}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Time.h">
@@ -93,6 +96,9 @@
     <ClInclude Include="Plane.h">
       <Filter>Geometry</Filter>
     </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Time.cpp">
@@ -144,6 +150,9 @@
     </ClCompile>
     <ClCompile Include="Geometry.cpp">
       <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Texture</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

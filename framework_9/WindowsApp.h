@@ -13,7 +13,7 @@ namespace framework9
 	private:
 		HINSTANCE m_instanceHandle;
 		HWND m_windowHandle;
-		WNDCLASSEX m_wndClassEx;
+		WNDCLASSEXW m_wndClassEx;
 		int m_width, m_height;
 
 		CDirect3DDevice *m_direct3DDevice;
@@ -22,7 +22,7 @@ namespace framework9
 		CWindowsApp();
 		~CWindowsApp();
 
-		bool Init(LPCTSTR windowName, int width = 640, int height = 480);
+		bool Init(wchar_t *windowName, int width = 640, int height = 480);
 
 		void Run(IGameState *gameState);
 	private:

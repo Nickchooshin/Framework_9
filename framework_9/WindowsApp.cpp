@@ -1,4 +1,4 @@
-#include "WindowsApp.h"
+﻿#include "WindowsApp.h"
 
 #include "Direct3DDevice.h"
 #include "CoreManager.h"
@@ -30,7 +30,7 @@ namespace framework9
 		FreeDevice();
 	}
 
-	bool CWindowsApp::Init(LPCTSTR windowName, int width, int height)
+	bool CWindowsApp::Init(wchar_t *windowName, int width, int height)
 	{
 		m_wndClassEx.cbSize = sizeof(WNDCLASSEX);
 		m_wndClassEx.style = CS_CLASSDC;
@@ -44,7 +44,8 @@ namespace framework9
 		m_wndClassEx.lpszMenuName = nullptr;
 		m_wndClassEx.lpszClassName = L"framework_9";
 		m_wndClassEx.hIconSm = nullptr;
-		RegisterClassEx(&m_wndClassEx);
+		//RegisterClassEx(&m_wndClassEx);
+		RegisterClassExW(&m_wndClassEx);
 
 		int screenX = GetSystemMetrics(SM_CXSCREEN);
 		int screenY = GetSystemMetrics(SM_CYSCREEN);
@@ -57,7 +58,8 @@ namespace framework9
 		windowRect.bottom = windowRect.top + height;
 		AdjustWindowRectEx(&windowRect, WindowStyle, 0, 0);
 
-		m_windowHandle = CreateWindowEx(
+		//m_windowHandle = CreateWindowEx(
+		m_windowHandle = CreateWindowExW(
 			0L, m_wndClassEx.lpszClassName, windowName,
 			WindowStyle,
 			windowRect.left, windowRect.top, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top,
@@ -100,7 +102,8 @@ namespace framework9
 				CoreManager::GetInstance()->Loop();
 			}
 
-			UnregisterClass(m_wndClassEx.lpszClassName, m_wndClassEx.hInstance);
+			//UnregisterClass(m_wndClassEx.lpszClassName, m_wndClassEx.hInstance);
+			UnregisterClassW(m_wndClassEx.lpszClassName, m_wndClassEx.hInstance);
 			FreeDevice();
 		}
 

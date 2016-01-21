@@ -7,13 +7,15 @@
 
 namespace framework9
 {
+	class CTexture;
+
 	class CGeometry : public CDirect3DObject
 	{
 	protected:
 		LPDIRECT3DVERTEXBUFFER9 m_vertexBuffer;
 		LPDIRECT3DINDEXBUFFER9 m_indexBuffer;
 		D3DMATERIAL9 m_material;
-		LPDIRECT3DTEXTURE9 m_texture;
+		CTexture *m_texture;
 		Vector3 m_position;
 		Vector3 m_rotation;
 
@@ -27,7 +29,7 @@ namespace framework9
 		void SetPosition(float x, float y, float z);
 		void SetRotation(Vector3 rotation);
 		void SetRotation(float x, float y, float z);
-		void SetTexture(const wchar_t *textureName);
+		void SetTexture(CTexture *texture);
 
 		virtual void Render() = 0;
 	};

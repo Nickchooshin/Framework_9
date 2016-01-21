@@ -1,4 +1,5 @@
 #include "Geometry.h"
+#include "Texture.h"
 
 namespace framework9
 {
@@ -25,12 +26,6 @@ namespace framework9
 			m_indexBuffer->Release();
 			m_indexBuffer = nullptr;
 		}
-
-		if (m_texture)
-		{
-			m_texture->Release();
-			m_texture = nullptr;
-		}
 	}
 
 	void CGeometry::SetPosition(Vector3 position)
@@ -56,17 +51,8 @@ namespace framework9
 		m_rotation = (m_rotation / 180.0f) * D3DX_PI;
 	}
 
-	void CGeometry::SetTexture(const wchar_t *textureName)
+	void CGeometry::SetTexture(CTexture *texture)
 	{
-		//if (FAILED(D3DXCreateTextureFromFile(direct3DDevice, textureName, &m_texture)))
-		if (FAILED(D3DXCreateTextureFromFileExW(direct3DDevice, textureName, 0, 0, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, 0, nullptr, nullptr, &m_texture)))
-		{
-			MessageBox(nullptr, L"D3DXCreateTextureFromFile fail", L"Error", MB_OK | MB_ICONERROR);
-			return;
-		}
-
-		// D3DFMT_A8R8G8B8
-		// D3DX_FILTER_NONE
-		// D3DX_DEFAULT
+		m_texture = texture;
 	}
 }
