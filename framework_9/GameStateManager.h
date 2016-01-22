@@ -48,6 +48,8 @@ namespace framework9
 		void Update();
 		void StateStackUpdate();
 
+		void Render();
+
 		void ClearAllState();
 	private:
 		GameStateManager();

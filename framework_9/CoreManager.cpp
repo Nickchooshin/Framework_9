@@ -5,17 +5,6 @@
 #include "GameStateManager.h"
 #include "Timer.h"
 
-#include "Cube.h"
-#include "Camera.h"
-#include "Light.h"
-#include "Plane.h"
-#include "Texture.h"
-
-framework9::CCamera Camera;
-framework9::CCube Cube;
-framework9::CPlane Plane;
-framework9::CTexture Texture;
-
 namespace framework9
 {
 	macro_singleton2(CoreManager);
@@ -37,16 +26,6 @@ namespace framework9
 		m_height = height;
 
 		CDirect3DObject::direct3DDevice = direct3DDevice->GetDirect3DDevice();
-
-		Camera.Init();
-		Cube.Init();
-		Plane.Init();
-		Texture.CreateTexture(L"sample.png");
-
-		Cube.SetTexture(&Texture);
-		//Cube.SetPosition(0.5f, 0.0f, 0.0f);
-		//Cube.SetRotation(45.0f, 25.0f, 0.0f);
-		Cube.SetRotation(0.0f, 45.0f, 0.0f);
 	}
 
 	void CoreManager::RemoveDevice()
@@ -64,10 +43,7 @@ namespace framework9
 		Timer::GetInstance()->Update();
 
 		direct3DDevice->BeginDraw();
-
-		Cube.Render();
-		Plane.Render();
-
+		GameStateManager::GetInstance()->Render();
 		direct3DDevice->EndDraw();
 
 		GameStateManager::GetInstance()->StateStackUpdate();

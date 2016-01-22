@@ -65,6 +65,15 @@ namespace framework9
 		}
 	}
 
+	void GameStateManager::Render()
+	{
+		if (m_stateStack.empty())
+			return;
+
+		IGameState *gameState = m_stateStack.back();
+		gameState->Render();
+	}
+
 	void GameStateManager::ClearAllState()
 	{
 		if (!m_stateStack.empty())

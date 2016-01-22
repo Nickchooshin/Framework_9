@@ -6,7 +6,12 @@
 namespace framework9
 {
 	class CEventReceiver;
+
+	class CCamera;
+	class CCube;
 	class CLight;
+	class CPlane;
+	class CTexture;
 
 	enum class KeyCode : unsigned char;
 }
@@ -17,8 +22,13 @@ class SampleState : public IGameState
 {
 private:
 	CEventReceiver *m_eventReceiver;
+
+	CCamera *m_camera;
 	CLight *m_ambient;
 	CLight *m_light;
+	CCube *m_cube;
+	CPlane *m_plane;
+	CTexture *m_texture;
 
 public:
 	SampleState();
@@ -28,6 +38,8 @@ public:
 	void Destroy() override;
 
 	void Update() override;
+
+	void Render() override;
 
 	void Timer(float dt);
 	void Timer2(float dt);
