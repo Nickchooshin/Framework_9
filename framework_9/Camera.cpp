@@ -8,6 +8,7 @@ namespace framework9
 {
 	CCamera::CCamera()
 		: CDirect3DObject()
+		, m_position(0.0f, 3.0f, 2.0f)
 	{
 	}
 	CCamera::~CCamera()
@@ -16,12 +17,7 @@ namespace framework9
 
 	bool CCamera::Init(float fov)
 	{
-		D3DXVECTOR3 vEyePt(0.0f, 3.0f, 2.0f);	// 카메라의 위치
-		D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);	// 카메라의 시선
-		D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);					// 상방벡터 (정수리)
-		D3DXMATRIXA16 matView;
-		D3DXMatrixLookAtRH(&matView, &vEyePt, &vLookatPt, &vUpVec);
-		direct3DDevice->SetTransform(D3DTS_VIEW, &matView);
+		UpdateViewMatrix();
 
 		// * issue 2
 		// 종횡비(가로/세로)의 화면 크기를 어디서, 어떻게 가져오느냐
@@ -34,5 +30,30 @@ namespace framework9
 		direct3DDevice->SetViewport(&viewport);
 
 		return true;
+	}
+
+	void CCamera::SetPosition(Vector3 position)
+	{
+		m_position = position;
+
+		UpdateViewMatrix();
+	}
+
+	void CCamera::SetPosition(float x, float y, float z)
+	{
+		m_position = { x, y, z };
+
+		UpdateViewMatrix();
+	}
+
+	void CCamera::UpdateViewMatrix()
+	{
+		D3DXVECTOR3 eye(m_position.x, m_position.y, m_position.z);			// 카메라의 위치
+		D3DXVECTOR3 lookAt(0.0f, 0.0f, 0.0f);								// 카메라의 시선
+		D3DXVECTOR3 up(0.0f, 1.0f, 0.0f);									// 상방벡터 (정수리)
+		D3DXMATRIXA16 matView;
+
+		D3DXMatrixLookAtRH(&matView, &eye, &lookAt, &up);
+		direct3DDevice->SetTransform(D3DTS_VIEW, &matView);
 	}
 }

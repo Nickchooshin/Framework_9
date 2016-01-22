@@ -27,33 +27,33 @@ namespace framework9
 			return false;
 		}
 
-		DWORD color = D3DCOLOR_ARGB(255, 255, 255, 255);
+		//DWORD color = D3DCOLOR_ARGB(255, 255, 255, 255);
 
 		vertices[0].position.x = -0.5f;
 		vertices[0].position.y = 0.0f;
 		vertices[0].position.z = -0.5f;
-		vertices[0].color = color;
+		//vertices[0].color = color;
 		vertices[0].tu = 0.0f;
 		vertices[0].tv = 0.0f;
 
 		vertices[1].position.x = -0.5f;
 		vertices[1].position.y = 0.0f;
 		vertices[1].position.z = 0.5f;
-		vertices[1].color = color;
+		//vertices[1].color = color;
 		vertices[1].tu = 0.0f;
 		vertices[1].tv = 1.0f;
 
 		vertices[2].position.x = 0.5f;
 		vertices[2].position.y = 0.0f;
 		vertices[2].position.z = 0.5f;
-		vertices[2].color = color;
+		//vertices[2].color = color;
 		vertices[2].tu = 1.0f;
 		vertices[2].tv = 1.0f;
 
 		vertices[3].position.x = 0.5f;
 		vertices[3].position.y = 0.0f;
 		vertices[3].position.z = -0.5f;
-		vertices[3].color = color;
+		//vertices[3].color = color;
 		vertices[3].tu = 1.0f;
 		vertices[3].tv = 0.0f;
 
@@ -104,14 +104,12 @@ namespace framework9
 		// Material
 		D3DMATERIAL9 material;
 		ZeroMemory(&material, sizeof(material));
-		material.Diffuse.r = material.Ambient.r = 1.0f;
-		material.Diffuse.g = material.Ambient.g = 1.0f;
-		material.Diffuse.b = material.Ambient.b = 1.0f;
-		material.Diffuse.a = material.Ambient.a = 1.0f;
+		material.Diffuse = { 1.0f, 1.0f, 1.0f, 1.0f };
+		material.Ambient = { 1.0f, 1.0f, 1.0f, 1.0f };
+		material.Specular = { 1.0f, 1.0f, 1.0f, 1.0f };
+		material.Emissive = { 0.0f, 0.0f, 0.0f, 0.0f };
+		material.Power = 0.0f;
 		direct3DDevice->SetMaterial(&material);
-		//
-
-		TCHAR str[1024] = { TEXT("") };
 
 		if (m_texture)
 			m_texture->SetTexture(0);

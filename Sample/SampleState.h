@@ -3,6 +3,8 @@
 
 #include "GameState.h"
 
+#include "Vector3.h"
+
 namespace framework9
 {
 	class CEventReceiver;
@@ -29,6 +31,9 @@ private:
 	CCube *m_cube;
 	CPlane *m_plane;
 	CTexture *m_texture;
+
+	Vector3 m_cameraPosition;
+	Vector3 m_cameraMove;
 
 public:
 	SampleState();

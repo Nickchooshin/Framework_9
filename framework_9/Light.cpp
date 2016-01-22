@@ -88,24 +88,39 @@ namespace framework9
 		direct3DDevice->LightEnable(m_lightNumber, m_isEnabled);
 	}
 
-	void CLight::SetDiffuse(float r, float g, float b, float a)
+	void CLight::SetAmbient(float r, float g, float b)
 	{
 		if (m_lightType == LightType::AMBIENT)
 		{
-			int A = (int)(a * 255.0f);
 			int R = (int)(r * 255.0f);
 			int G = (int)(g * 255.0f);
 			int B = (int)(b * 255.0f);
 
-			direct3DDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_ARGB(A, R, G, B));
+			direct3DDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(R, G, B));
 		}
 		else
 		{
-			m_light.Diffuse.a = a;
 			m_light.Diffuse.r = r;
 			m_light.Diffuse.g = g;
 			m_light.Diffuse.b = b;
+			m_light.Diffuse.a = 1.0f;
 		}
+	}
+
+	void CLight::SetDiffuse(float r, float g, float b)
+	{
+		m_light.Diffuse.r = r;
+		m_light.Diffuse.g = g;
+		m_light.Diffuse.b = b;
+		m_light.Diffuse.a = 1.0f;
+	}
+
+	void CLight::SetSpecular(float r, float g, float b)
+	{
+		m_light.Specular.r = r;
+		m_light.Specular.g = g;
+		m_light.Specular.b = b;
+		m_light.Specular.a = 1.0f;
 	}
 
 	Vector3 CLight::GetDirection() const

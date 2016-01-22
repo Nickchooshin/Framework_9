@@ -108,10 +108,11 @@ namespace framework9
 		m_direct3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);	// 버텍스 컬링 시계방향
 		m_direct3DDevice->SetRenderState(D3DRS_DITHERENABLE, FALSE); // 디더링 여부 (https://ko.wikipedia.org/wiki/%EB%94%94%EB%8D%94%EB%A7%81)
 		m_direct3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE); // 광원
-		m_direct3DDevice->SetRenderState(D3DRS_SPECULARENABLE, TRUE); // 재질 광원? 스펙큐러 하이라이트
+		m_direct3DDevice->SetRenderState(D3DRS_SPECULARENABLE, TRUE); // 정반사광(스펙큐러 하이라이트)
 		m_direct3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE); // Z 버퍼
 		m_direct3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE); // Z 버퍼 2D 관련??		어플리케이션에 의한 깊이 버퍼에의 쓰기
 		m_direct3DDevice->SetRenderState(D3DRS_ANTIALIASEDLINEENABLE, FALSE); // 안티앨리어싱 렌더링
+		//m_direct3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE); // 변환 단계에서 법선 왜곡이 발생할 수 있으므로, 변환 단계 이후에 Direct3D 에서 법선을 다시 정규화 한다.
 
 		//m_direct3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME); // 와이어 프레임
 	}

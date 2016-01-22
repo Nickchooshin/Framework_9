@@ -11,6 +11,7 @@
 #include "Cube.h"
 #include "Plane.h"
 #include "Texture.h"
+#include "KeyCode.h"
 
 #include <stdio.h>
 
@@ -22,6 +23,8 @@ SampleState::SampleState()
 	, m_cube(nullptr)
 	, m_plane(nullptr)
 	, m_texture(nullptr)
+	, m_cameraPosition(0.0f, 3.0f, 2.0f)
+	, m_cameraMove(0.0f, 0.0f, 0.0f)
 {
 }
 SampleState::~SampleState()
@@ -85,7 +88,7 @@ void SampleState::Init()
 
 	m_ambient = new CLight();
 	m_ambient->Init(LightType::AMBIENT);
-	m_ambient->SetDiffuse(0.5f, 0.5f, 0.5f);
+	m_ambient->SetAmbient(0.5f, 0.5f, 0.5f);
 
 	m_light = new CLight();
 	m_light->Init(LightType::DIRECTIONAL);
@@ -112,6 +115,10 @@ void SampleState::Destroy()
 
 void SampleState::Update()
 {
+	m_cameraPosition += m_cameraMove * Time::GetInstance()->deltaTime;
+
+	m_camera->SetPosition(m_cameraPosition);
+
 	printf("Update: %f\n", Time::GetInstance()->deltaTime);
 }
 
@@ -133,6 +140,26 @@ void SampleState::Timer2(float dt)
 
 void SampleState::Keyboard(KeyCode keycode, bool isPressed)
 {
+	if (keycode == KeyCode::KEY_W)
+	{
+		if (isPressed)
+			m_cameraMove.z -= 0.5f;
+		else
+			m_cameraMove.z += 0.5f;
+	}
+
+	if (keycode == KeyCode::KEY_S)
+	{
+		if (isPressed)
+			m_cameraMove.z += 0.5f;
+		else
+			m_cameraMove.z -= 0.5f;
+	}
+	
+	// ¿ÃΩ¥ √≥∏Æ
+	//m_cameraMove += 0.5f;
+
+
 	printf("%d %s\n", keycode, isPressed ? "Pressed" : "Released");
 }
 

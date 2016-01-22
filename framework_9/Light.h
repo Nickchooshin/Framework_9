@@ -35,8 +35,12 @@ namespace framework9
 		void SetDirection(float x, float y, float z);
 		void SetRange(float range);
 		void SetEnabled(bool isEnabled);
-		// diffuse value range is 0.0f ~ 1.0f
-		void SetDiffuse(float r, float g, float b, float a = 1.0f);
+		// color value range is 0.0f ~ 1.0f
+		void SetAmbient(float r, float g, float b);
+		// color value range is 0.0f ~ 1.0f
+		void SetDiffuse(float r, float g, float b);
+		// color value range is 0.0f ~ 1.0f
+		void SetSpecular(float r, float g, float b);
 
 		Vector3 GetDirection() const;
 		bool IsEnabled() const;
