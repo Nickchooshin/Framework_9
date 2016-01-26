@@ -1,6 +1,8 @@
 #include "Plane.h"
 #include "Texture.h"
 
+#include "Cube.h"
+
 namespace framework9
 {
 	CPlane::CPlane()
@@ -86,20 +88,8 @@ namespace framework9
 
 	void CPlane::Render()
 	{
-		D3DXMATRIXA16 matWorld, matT;
-		D3DXMatrixIdentity(&matWorld);
-
-		// Translation
-		D3DXMatrixTranslation(&matT, m_position.x, m_position.y, m_position.z);
-
-		// Quaternion
-		D3DXMATRIXA16 matQuat;
-		D3DXQUATERNION quaternion;
-		D3DXQuaternionRotationYawPitchRoll(&quaternion, m_rotation.y, m_rotation.x, m_rotation.z);
-		D3DXMatrixAffineTransformation(&matQuat, 1.0f, nullptr, &quaternion, nullptr);
-
-		matWorld = matWorld * matT * matQuat;
-		direct3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+		UpdateMatrix();
+		direct3DDevice->SetTransform(D3DTS_WORLD, &m_matWorld);
 
 		// Material
 		D3DMATERIAL9 material;

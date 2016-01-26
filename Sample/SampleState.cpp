@@ -103,9 +103,9 @@ void SampleState::Init()
 	m_texture->CreateTexture(L"sample.png");
 
 	m_cube->SetTexture(m_texture);
-	//m_cube->SetPosition(0.5f, 0.0f, 0.0f);
-	//m_cube->SetRotation(45.0f, 25.0f, 0.0f);
+	m_cube->SetPosition(0.0f, 0.0f, 1.0f);
 	m_cube->SetRotation(0.0f, 45.0f, 0.0f);
+	m_cube->SetScale(0.5f, 0.5f, 0.5f);
 }
 
 void SampleState::Destroy()

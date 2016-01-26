@@ -120,6 +120,7 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="KeyCode.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="Matrix.h" />
     <ClInclude Include="MouseButton.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Singleton.h" />
