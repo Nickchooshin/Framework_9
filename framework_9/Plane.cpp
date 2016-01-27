@@ -1,8 +1,6 @@
 #include "Plane.h"
 #include "Texture.h"
 
-#include "Cube.h"
-
 namespace framework9
 {
 	CPlane::CPlane()

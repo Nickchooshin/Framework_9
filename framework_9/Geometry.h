@@ -3,7 +3,7 @@
 
 #include "Direct3DObject.h"
 #include "Vertex.h"
-#include "Vector3.h"
+#include "Vector.h"
 #include "Matrix.h"
 
 namespace framework9

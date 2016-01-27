@@ -92,7 +92,6 @@
       <Filter>Light</Filter>
     </ClInclude>
     <ClInclude Include="Direct3DObject.h" />
-    <ClInclude Include="Vector3.h" />
     <ClInclude Include="Plane.h">
       <Filter>Geometry</Filter>
     </ClInclude>
@@ -100,6 +99,7 @@
       <Filter>Texture</Filter>
     </ClInclude>
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Time.cpp">
@@ -145,7 +145,6 @@
       <Filter>Light</Filter>
     </ClCompile>
     <ClCompile Include="Direct3DObject.cpp" />
-    <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="Plane.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
@@ -155,5 +154,6 @@
     <ClCompile Include="Texture.cpp">
       <Filter>Texture</Filter>
     </ClCompile>
+    <ClCompile Include="Vector.cpp" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,5 @@
 #include "Direct3DDevice.h"
 
-#include "Input.h"
-
 namespace framework9
 {
 	CDirect3DDevice::CDirect3DDevice()

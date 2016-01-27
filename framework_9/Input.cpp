@@ -1,5 +1,4 @@
 #include "Input.h"
-
 #include "EventSender.h"
 #include "EventKeyboard.h"
 #include "EventMouse.h"

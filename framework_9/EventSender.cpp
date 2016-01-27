@@ -1,5 +1,4 @@
 #include "EventSender.h"
-
 #include "Event.h"
 #include "EventReceiver.h"
 

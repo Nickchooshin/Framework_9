@@ -1,5 +1,4 @@
 #include "CoreManager.h"
-
 #include "Direct3DDevice.h"
 #include "Direct3DObject.h"
 #include "GameStateManager.h"

@@ -1,5 +1,4 @@
 ﻿#include "WindowsApp.h"
-
 #include "Direct3DDevice.h"
 #include "CoreManager.h"
 #include "GameStateManager.h"

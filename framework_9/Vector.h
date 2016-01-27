@@ -20,6 +20,9 @@ namespace framework9
 		Vector2& operator *=(float scalar);
 		Vector2& operator /=(float scalar);
 
+		Vector2 operator +() const;
+		Vector2 operator -() const;
+
 		Vector2 operator +(const Vector2 &vector) const;
 		Vector2 operator -(const Vector2 &vector) const;
 		Vector2 operator *(float scalar) const;
@@ -27,6 +30,10 @@ namespace framework9
 
 		bool operator ==(const Vector2 &vector) const;
 		bool operator !=(const Vector2 &vector) const;
+
+		Vector2 Normalize() const;
+
+		static float Dot(const Vector2 &vector1, const Vector2 &vector2);
 	} Vector2;
 
 	typedef struct Vector3
@@ -47,6 +54,9 @@ namespace framework9
 		Vector3& operator *=(float scalar);
 		Vector3& operator /=(float scalar);
 
+		Vector3 operator +() const;
+		Vector3 operator -() const;
+
 		Vector3 operator +(const Vector3 &vector) const;
 		Vector3 operator -(const Vector3 &vector) const;
 		Vector3 operator *(float scalar) const;
@@ -54,6 +64,11 @@ namespace framework9
 
 		bool operator ==(const Vector3 &vector) const;
 		bool operator !=(const Vector3 &vector) const;
+
+		Vector3 Normalize() const;
+
+		static Vector3 Cross(const Vector3 &vector1, const Vector3 &vector2);
+		static float Dot(const Vector3 &vector1, const Vector3 &vector2);
 	} Vector3;
 }
 

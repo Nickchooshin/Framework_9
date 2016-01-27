@@ -2,7 +2,7 @@
 #define _LIGHT_H_
 
 #include "Direct3DObject.h"
-#include "Vector3.h"
+#include "Vector.h"
 
 namespace framework9
 {

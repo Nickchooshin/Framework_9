@@ -1,6 +1,4 @@
 #include "Light.h"
-#include "CoreManager.h"
-#include "Direct3DDevice.h"
 
 namespace framework9
 {

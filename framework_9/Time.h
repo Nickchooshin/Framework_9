@@ -2,9 +2,8 @@
 #define _TIME_H_
 
 #include "Singleton.h"
-#include <chrono>
 
-#include <Windows.h>
+#include <chrono>
 
 namespace framework9
 {

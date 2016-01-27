@@ -2,8 +2,7 @@
 #define _CAMERA_H_
 
 #include "Direct3DObject.h"
-
-#include "Vector3.h"
+#include "Vector.h"
 
 namespace framework9
 {
@@ -11,6 +10,9 @@ namespace framework9
 	{
 	private:
 		Vector3 m_position;
+		Vector3 m_direction;
+		Vector3 m_up;
+		Vector3 m_rotation;
 
 	public:
 		CCamera();
@@ -21,8 +23,11 @@ namespace framework9
 
 		void SetPosition(Vector3 position);
 		void SetPosition(float x, float y, float z);
+		void SetRotation(Vector3 rotation);
+		void SetRotation(float x, float y, float z);
 	private:
 		void UpdateViewMatrix();
+		void _UpdateViewMatrix();
 	};
 }
 

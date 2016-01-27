@@ -1,5 +1,4 @@
 #include "EventReceiverMouse.h"
-
 #include "EventMouse.h"
 
 namespace framework9

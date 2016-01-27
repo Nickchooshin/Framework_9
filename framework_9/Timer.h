@@ -2,7 +2,6 @@
 #define _TIMER_H_
 
 #include "Singleton.h"
-
 #include "TimerHandle.h"
 
 #include <functional>
