@@ -24,7 +24,9 @@ SampleState::SampleState()
 	, m_plane(nullptr)
 	, m_texture(nullptr)
 	, m_cameraPosition(0.0f, 3.0f, 2.0f)
-	, m_cameraMove(0.0f, 0.0f, 0.0f)
+	, m_cameraRotation()
+	, m_cameraMove()
+	, m_cameraRotating()
 {
 }
 SampleState::~SampleState()
@@ -116,8 +118,10 @@ void SampleState::Destroy()
 void SampleState::Update()
 {
 	m_cameraPosition += m_cameraMove * Time::GetInstance()->deltaTime;
+	m_cameraRotation += m_cameraRotating * Time::GetInstance()->deltaTime;
 
 	m_camera->SetPosition(m_cameraPosition);
+	m_camera->SetRotation(m_cameraRotation);
 
 	printf("Update: %f\n", Time::GetInstance()->deltaTime);
 }
@@ -154,6 +158,22 @@ void SampleState::Keyboard(KeyCode keycode, bool isPressed)
 			m_cameraMove.z += 0.5f;
 		else
 			m_cameraMove.z -= 0.5f;
+	}
+
+	if (keycode == KeyCode::KEY_Q)
+	{
+		if (isPressed)
+			m_cameraRotating.y += 45.0f;
+		else
+			m_cameraRotating.y -= 45.0f;
+	}
+
+	if (keycode == KeyCode::KEY_E)
+	{
+		if (isPressed)
+			m_cameraRotating.y -= 45.0f;
+		else
+			m_cameraRotating.y += 45.0f;
 	}
 	
 	// ¿ÃΩ¥ √≥∏Æ

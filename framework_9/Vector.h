@@ -11,7 +11,6 @@ namespace framework9
 
 	public:
 		Vector2();
-		Vector2(const float &force);
 		Vector2(const Vector2 &vector);
 		Vector2(float x, float y);
 
@@ -45,7 +44,6 @@ namespace framework9
 
 	public:
 		Vector3();
-		Vector3(const float &force);
 		Vector3(const Vector3 &vector);
 		Vector3(float x, float y, float z);
 

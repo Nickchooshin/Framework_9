@@ -9,10 +9,6 @@ namespace framework9
 		: x(0.0f), y(0.0f)
 	{
 	}
-	Vector2::Vector2(const float &force)
-		: x(0.0f), y(0.0f)
-	{
-	}
 	Vector2::Vector2(const Vector2 &vector)
 		: x(vector.x), y(vector.y)
 	{
@@ -138,10 +134,6 @@ namespace framework9
 
 	// Vector3
 	Vector3::Vector3()
-		: x(0.0f), y(0.0f), z(0.0f)
-	{
-	}
-	Vector3::Vector3(const float &force)
 		: x(0.0f), y(0.0f), z(0.0f)
 	{
 	}

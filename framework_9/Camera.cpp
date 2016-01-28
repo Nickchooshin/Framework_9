@@ -50,6 +50,7 @@ namespace framework9
 	void CCamera::SetRotation(Vector3 rotation)
 	{
 		m_rotation = rotation;
+		m_rotation = (m_rotation / 180.0f) * D3DX_PI;
 
 		UpdateViewMatrix();
 	}
@@ -57,28 +58,38 @@ namespace framework9
 	void CCamera::SetRotation(float x, float y, float z)
 	{
 		m_rotation = { x, y, z };
+		m_rotation = (m_rotation / 180.0f) * D3DX_PI;
 
 		UpdateViewMatrix();
 	}
 
 	void CCamera::UpdateViewMatrix()
 	{
-		Vector3 xaxis, yaxis, zaxis;
+		Vector3 xAxis, yAxis, zAxis;
 
-		zaxis = m_direction.Normalize();
-		xaxis = Vector3::Cross(zaxis, m_up).Normalize();
-		yaxis = Vector3::Cross(xaxis, zaxis).Normalize();
+		zAxis = -m_direction.Normalize();
+		xAxis = Vector3::Cross(m_up, zAxis).Normalize();
+		yAxis = Vector3::Cross(zAxis, xAxis).Normalize();
 
-		zaxis = -zaxis;
-		float x = -Vector3::Dot(xaxis, m_position);
-		float y = -Vector3::Dot(yaxis, m_position);
-		float z = -Vector3::Dot(zaxis, m_position);
+		D3DXQUATERNION quaternion;
+		D3DXMATRIX matQuat;
+
+		D3DXQuaternionRotationYawPitchRoll(&quaternion, m_rotation.y, m_rotation.x, m_rotation.z);
+		D3DXMatrixRotationQuaternion(&matQuat, &quaternion);
+
+		D3DXVec3TransformCoord((D3DXVECTOR3*)&xAxis, (D3DXVECTOR3*)&xAxis, &matQuat);
+		D3DXVec3TransformCoord((D3DXVECTOR3*)&yAxis, (D3DXVECTOR3*)&yAxis, &matQuat);
+		D3DXVec3TransformCoord((D3DXVECTOR3*)&zAxis, (D3DXVECTOR3*)&zAxis, &matQuat);
+
+		float x = -Vector3::Dot(xAxis, m_position);
+		float y = -Vector3::Dot(yAxis, m_position);
+		float z = -Vector3::Dot(zAxis, m_position);
 
 		D3DXMATRIXA16 matView;
 		matView = D3DXMATRIXA16{
-			xaxis.x, yaxis.x, zaxis.x, 0.0f,
-			xaxis.y, yaxis.y, zaxis.y, 0.0f,
-			xaxis.z, yaxis.z, zaxis.z, 0.0f,
+			xAxis.x, yAxis.x, zAxis.x, 0.0f,
+			xAxis.y, yAxis.y, zAxis.y, 0.0f,
+			xAxis.z, yAxis.z, zAxis.z, 0.0f,
 			x, y, z, 1.0f
 		};
 

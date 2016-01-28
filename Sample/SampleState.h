@@ -33,7 +33,9 @@ private:
 	CTexture *m_texture;
 
 	Vector3 m_cameraPosition;
+	Vector3 m_cameraRotation;
 	Vector3 m_cameraMove;
+	Vector3 m_cameraRotating;
 
 public:
 	SampleState();
