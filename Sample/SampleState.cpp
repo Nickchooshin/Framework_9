@@ -102,7 +102,7 @@ void SampleState::Init()
 	m_plane->Init();
 
 	m_texture = new CTexture();
-	m_texture->CreateTexture(L"sample.png");
+	m_texture->CreateTexture(L"./Resources/sample.png");
 
 	m_cube->SetTexture(m_texture);
 	m_cube->SetPosition(0.0f, 0.0f, 1.0f);
