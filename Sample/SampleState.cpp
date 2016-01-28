@@ -12,6 +12,7 @@
 #include "Plane.h"
 #include "Texture.h"
 #include "KeyCode.h"
+#include "HeightMap.h"
 
 #include <stdio.h>
 
@@ -23,6 +24,8 @@ SampleState::SampleState()
 	, m_cube(nullptr)
 	, m_plane(nullptr)
 	, m_texture(nullptr)
+	, m_heightMap(nullptr)
+	, m_heightMapTexture(nullptr)
 	, m_cameraPosition(0.0f, 3.0f, 2.0f)
 	, m_cameraRotation()
 	, m_cameraMove()
@@ -66,6 +69,18 @@ SampleState::~SampleState()
 		delete m_texture;
 		m_texture = nullptr;
 	}
+
+	if (m_heightMap)
+	{
+		delete m_heightMap;
+		m_heightMap = nullptr;
+	}
+
+	if (m_heightMapTexture)
+	{
+		delete m_heightMapTexture;
+		m_heightMapTexture = nullptr;
+	}
 }
 
 void SampleState::Init()
@@ -104,6 +119,14 @@ void SampleState::Init()
 	m_texture = new CTexture();
 	m_texture->CreateTexture(L"./Resources/sample.png");
 
+	m_heightMapTexture = new CTexture();
+	m_heightMapTexture->CreateTexture(L"./Resources/coastMountain64.bmp");
+
+	m_heightMap = new CHeightMap();
+	m_heightMap->Init();
+	m_heightMap->SetHeightMap(m_heightMapTexture);
+	m_heightMap->SetScale(2.0f, 1.0f, 2.0f);
+
 	m_cube->SetTexture(m_texture);
 	m_cube->SetPosition(0.0f, 0.0f, 1.0f);
 	m_cube->SetRotation(0.0f, 45.0f, 0.0f);
@@ -130,6 +153,8 @@ void SampleState::Render()
 {
 	m_cube->Render();
 	m_plane->Render();
+
+	m_heightMap->Render();
 }
 
 void SampleState::Timer(float dt)

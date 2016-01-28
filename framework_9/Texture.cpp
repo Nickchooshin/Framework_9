@@ -22,6 +22,8 @@ namespace framework9
 			return false;
 		}
 
+		m_texture->GetLevelDesc(0, &m_desc);
+
 		// D3DFMT_A8R8G8B8
 		// D3DX_FILTER_NONE
 		// D3DX_DEFAULT
@@ -42,6 +44,36 @@ namespace framework9
 	void CTexture::SetTextureMipmap(TextureFilter mipmap)
 	{
 		m_mipmap = mipmap;
+	}
+
+	unsigned int CTexture::GetWidth() const
+	{
+		return m_desc.Width;
+	}
+
+	unsigned int CTexture::GetHeight() const
+	{
+		return m_desc.Height;
+	}
+
+	void* CTexture::Lock(int &pitch)
+	{
+		D3DLOCKED_RECT rect;
+
+		if (FAILED(m_texture->LockRect(0, &rect, nullptr, D3DLOCK_READONLY)))
+		{
+			MessageBox(nullptr, L"Texture Lock Fail", L"Error", MB_OK | MB_ICONERROR);
+			return nullptr;
+		}
+
+		pitch = rect.Pitch;
+
+		return rect.pBits;
+	}
+
+	void CTexture::Unlock()
+	{
+		m_texture->UnlockRect(0);
 	}
 
 	void CTexture::SetTexture(DWORD stage)

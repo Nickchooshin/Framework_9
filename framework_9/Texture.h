@@ -29,6 +29,7 @@ namespace framework9
 		TextureMode m_mode;
 		TextureFilter m_filter;
 		TextureFilter m_mipmap;
+		D3DSURFACE_DESC m_desc;
 
 	public:
 		CTexture();
@@ -43,6 +44,12 @@ namespace framework9
 		// filter value range is NONE ~ LINEAR
 		// default mipmap filter is NONE
 		void SetTextureMipmap(TextureFilter mipmap);
+
+		unsigned int GetWidth() const;
+		unsigned int GetHeight() const;
+
+		void* Lock(int &pitch);
+		void Unlock();
 
 		void SetTexture(DWORD stage);
 	};

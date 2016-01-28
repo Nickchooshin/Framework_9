@@ -14,6 +14,7 @@ namespace framework9
 	class CLight;
 	class CPlane;
 	class CTexture;
+	class CHeightMap;
 
 	enum class KeyCode : unsigned char;
 }
@@ -31,6 +32,9 @@ private:
 	CCube *m_cube;
 	CPlane *m_plane;
 	CTexture *m_texture;
+
+	CHeightMap *m_heightMap;
+	CTexture *m_heightMapTexture;
 
 	Vector3 m_cameraPosition;
 	Vector3 m_cameraRotation;
