@@ -203,20 +203,19 @@ namespace framework9
 		vertices[23].tu = 1.0f;
 		vertices[23].tv = 0.0f;
 
-		auto GetNormal = [](D3DXVECTOR3 v1, D3DXVECTOR3 v2, D3DXVECTOR3 v3, D3DXVECTOR3 *out)
+		auto GetNormal = [](Vector3 &v1, Vector3 &v2, Vector3 &v3)
 		{
-			D3DXVECTOR3 v12 = v2 - v1;
-			D3DXVECTOR3 v13 = v3 - v1;
+			Vector3 v12 = v2 - v1;
+			Vector3 v13 = v3 - v1;
 
-			D3DXVec3Cross(out, &v12, &v13);
-			D3DXVec3Normalize(out, out);
+			return Vector3::Cross(v12, v13).Normalize();
 		};
 
 		for (int i = 0; i < 6; i++)
 		{
 			int index = i * 4;
-			D3DXVECTOR3 normal;
-			GetNormal(vertices[index].position, vertices[index + 1].position, vertices[index + 2].position, &normal);
+			Vector3 normal;
+			normal = GetNormal(vertices[index].position, vertices[index + 1].position, vertices[index + 2].position);
 
 			for (int i = 0; i < 4; i++)
 				vertices[index + i].normal = normal;

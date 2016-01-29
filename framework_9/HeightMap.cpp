@@ -84,13 +84,12 @@ namespace framework9
 		}
 
 		//
-		auto GetNormal = [](D3DXVECTOR3 v1, D3DXVECTOR3 v2, D3DXVECTOR3 v3, D3DXVECTOR3 *out)
+		auto GetNormal = [](Vector3 &v1, Vector3 &v2, Vector3 &v3)
 		{
-			D3DXVECTOR3 v12 = v2 - v1;
-			D3DXVECTOR3 v13 = v3 - v1;
+			Vector3 v12 = v2 - v1;
+			Vector3 v13 = v3 - v1;
 
-			D3DXVec3Cross(out, &v12, &v13);
-			D3DXVec3Normalize(out, out);
+			return Vector3::Cross(v12, v13).Normalize();
 		};
 
 		for (int y = 0; y < height - 1; y++)
@@ -109,19 +108,19 @@ namespace framework9
 				indices[index + 1]._1 = vertexIndex2;
 				indices[index + 1]._2 = vertexIndex2 + 1;
 
-				D3DXVECTOR3 normal;
+				Vector3 normal;
 
-				GetNormal(vertices[vertexIndex].position, vertices[vertexIndex2].position, vertices[vertexIndex + 1].position, &normal);
+				normal = GetNormal(vertices[vertexIndex].position, vertices[vertexIndex2].position, vertices[vertexIndex + 1].position);
 				vertices[vertexIndex].normal = normal;
 				vertices[vertexIndex2].normal = normal;
 				vertices[vertexIndex + 1].normal = normal;
 
-				GetNormal(vertices[vertexIndex + 1].position, vertices[vertexIndex2].position, vertices[vertexIndex2 + 1].position, &normal);
+				normal = GetNormal(vertices[vertexIndex + 1].position, vertices[vertexIndex2].position, vertices[vertexIndex2 + 1].position);
 				vertices[vertexIndex + 1].normal = normal;
 				vertices[vertexIndex2].normal += normal;
 				vertices[vertexIndex2 + 1].normal = normal;
 
-				D3DXVec3Normalize(&vertices[vertexIndex2].normal, &vertices[vertexIndex2].normal);
+				vertices[vertexIndex2].normal = vertices[vertexIndex2].normal.Normalize();
 			}
 		}
 
