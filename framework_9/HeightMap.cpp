@@ -40,8 +40,7 @@ namespace framework9
 			return false;
 		}
 
-		int pitch;
-		void *bits = m_heightMap->Lock(pitch);
+		void *bits = m_heightMap->Lock();
 		if (!bits)
 			return false;
 
@@ -69,6 +68,8 @@ namespace framework9
 				int abcd = 0;
 			}
 		}
+
+		m_heightMap->Unlock();
 
 		if (FAILED(direct3DDevice->CreateIndexBuffer((width - 1) * (height - 1) * 2 * sizeof(Index), 0, D3DFMT_INDEX16, D3DPOOL_DEFAULT, &m_indexBuffer, nullptr)))
 		{

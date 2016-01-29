@@ -48,7 +48,7 @@ namespace framework9
 		unsigned int GetWidth() const;
 		unsigned int GetHeight() const;
 
-		void* Lock(int &pitch);
+		void* Lock();
 		void Unlock();
 
 		void SetTexture(DWORD stage);

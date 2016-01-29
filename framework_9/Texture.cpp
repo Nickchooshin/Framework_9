@@ -56,7 +56,7 @@ namespace framework9
 		return m_desc.Height;
 	}
 
-	void* CTexture::Lock(int &pitch)
+	void* CTexture::Lock()
 	{
 		D3DLOCKED_RECT rect;
 
@@ -65,8 +65,6 @@ namespace framework9
 			MessageBox(nullptr, L"Texture Lock Fail", L"Error", MB_OK | MB_ICONERROR);
 			return nullptr;
 		}
-
-		pitch = rect.Pitch;
 
 		return rect.pBits;
 	}
