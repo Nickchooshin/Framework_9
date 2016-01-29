@@ -9,6 +9,7 @@ namespace framework9
 	CHeightMap::CHeightMap()
 		: CGeometry()
 		, m_heightMap(nullptr)
+		, m_width(0), m_height(0)
 	{
 	}
 	CHeightMap::~CHeightMap()
@@ -24,10 +25,10 @@ namespace framework9
 	{
 		m_heightMap = heightMap;
 
-		unsigned int width = m_heightMap->GetWidth();
-		unsigned int height = m_heightMap->GetHeight();
+		m_width = m_heightMap->GetWidth();
+		m_height = m_heightMap->GetHeight();
 
-		if (FAILED(direct3DDevice->CreateVertexBuffer((width * height) * sizeof(Vertex), 0, D3DFVF_VERTEX, D3DPOOL_DEFAULT, &m_vertexBuffer, nullptr)))
+		if (FAILED(direct3DDevice->CreateVertexBuffer((m_width * m_height) * sizeof(Vertex), 0, D3DFVF_VERTEX, D3DPOOL_DEFAULT, &m_vertexBuffer, nullptr)))
 		{
 			MessageBox(nullptr, L"CreateVertexBuffer Fail", L"Error", MB_OK | MB_ICONERROR);
 			return false;
@@ -44,12 +45,12 @@ namespace framework9
 		if (!bits)
 			return false;
 
-		for (int y = 0; y < height; y++)
+		for (int y = 0; y < m_height; y++)
 		{
-			for (int x = 0; x < width; x++)
+			for (int x = 0; x < m_width; x++)
 			{
-				int index = (y * width) + x;
-				int bitsIndex = ((y * width) + x) * 4;
+				int index = (y * m_width) + x;
+				int bitsIndex = ((y * m_width) + x) * 4;
 
 				unsigned char b = *((char*)bits + bitsIndex);
 				unsigned char g = *((char*)bits + bitsIndex + 1);
@@ -62,16 +63,16 @@ namespace framework9
 				//r = (color & 0x00ff0000) >> 16;
 				//a = (color & 0xff000000) >> 24;
 
-				vertices[index].position.x = -0.5f + (1.0f * ((float)x / width));
+				vertices[index].position.x = -0.5f + (1.0f * ((float)x / m_width));
 				vertices[index].position.y = 0.0f + (1.0f * ((float)r / 255));
-				vertices[index].position.z = -0.5f + (1.0f * ((float)y / height));
+				vertices[index].position.z = -0.5f + (1.0f * ((float)y / m_height));
 				int abcd = 0;
 			}
 		}
 
 		m_heightMap->Unlock();
 
-		if (FAILED(direct3DDevice->CreateIndexBuffer((width - 1) * (height - 1) * 2 * sizeof(Index), 0, D3DFMT_INDEX16, D3DPOOL_DEFAULT, &m_indexBuffer, nullptr)))
+		if (FAILED(direct3DDevice->CreateIndexBuffer((m_width - 1) * (m_height - 1) * 2 * sizeof(Index), 0, D3DFMT_INDEX16, D3DPOOL_DEFAULT, &m_indexBuffer, nullptr)))
 		{
 			MessageBox(nullptr, L"CreateIndexBuffer Fail", L"Error", MB_OK | MB_ICONERROR);
 			return false;
@@ -93,13 +94,13 @@ namespace framework9
 			return Vector3::Cross(v12, v13).Normalize();
 		};
 
-		for (int y = 0; y < height - 1; y++)
+		for (int y = 0; y < m_height - 1; y++)
 		{
-			for (int x = 0; x < width - 1; x++)
+			for (int x = 0; x < m_width - 1; x++)
 			{
-				int index = ((y * width) + x) * 2;
-				int vertexIndex = (y * width) + x;
-				int vertexIndex2 = ((y + 1) * width) + x;
+				int index = ((y * (m_width - 1)) + x) * 2;
+				int vertexIndex = (y * m_width) + x;
+				int vertexIndex2 = ((y + 1) * m_width) + x;
 
 				indices[index]._0 = vertexIndex;
 				indices[index]._1 = vertexIndex2;
@@ -162,7 +163,8 @@ namespace framework9
 		direct3DDevice->SetStreamSource(0, m_vertexBuffer, 0, sizeof(Vertex));
 		direct3DDevice->SetFVF(D3DFVF_VERTEX);
 		direct3DDevice->SetIndices(m_indexBuffer);
-		direct3DDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 64 * 64, 0, 63 * 63 * 2);
+		for (int i = 0; i < m_height; i++)
+			direct3DDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, i * m_height, 0, m_width, 0, (m_width - 1) * 2);
 
 		direct3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE); // ¾ËÆÄ ºí·»µù OFF
 	}

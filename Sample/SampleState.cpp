@@ -120,12 +120,16 @@ void SampleState::Init()
 	m_texture->CreateTexture(L"./Resources/sample.png");
 
 	m_heightMapTexture = new CTexture();
-	m_heightMapTexture->CreateTexture(L"./Resources/coastMountain64.bmp");
+	//m_heightMapTexture->CreateTexture(L"./Resources/coastMountain64.bmp");
+	//m_heightMapTexture->CreateTexture(L"./Resources/height2.jpg");
+	//m_heightMapTexture->CreateTexture(L"./Resources/Heightmap.png");
+	m_heightMapTexture->CreateTexture(L"./Resources/mountains.jpg");
 
 	m_heightMap = new CHeightMap();
 	m_heightMap->Init();
 	m_heightMap->SetHeightMap(m_heightMapTexture);
 	m_heightMap->SetScale(2.0f, 1.0f, 2.0f);
+	//m_heightMap->SetScale(15.0f, 0.25f, 15.0f);
 
 	m_cube->SetTexture(m_texture);
 	m_cube->SetPosition(0.0f, 0.0f, 1.0f);
@@ -199,6 +203,22 @@ void SampleState::Keyboard(KeyCode keycode, bool isPressed)
 			m_cameraRotating.y -= 45.0f;
 		else
 			m_cameraRotating.y += 45.0f;
+	}
+
+	if (keycode == KeyCode::KEY_R)
+	{
+		if (isPressed)
+			m_cameraMove.y += 0.5f;
+		else
+			m_cameraMove.y -= 0.5f;
+	}
+
+	if (keycode == KeyCode::KEY_F)
+	{
+		if (isPressed)
+			m_cameraMove.y -= 0.5f;
+		else
+			m_cameraMove.y += 0.5f;
 	}
 	
 	// ¿ÃΩ¥ √≥∏Æ

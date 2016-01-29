@@ -9,6 +9,7 @@ namespace framework9
 	{
 	private:
 		CTexture *m_heightMap;
+		unsigned int m_width, m_height;
 
 	public:
 		CHeightMap();
