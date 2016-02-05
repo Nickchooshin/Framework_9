@@ -103,6 +103,7 @@
     <ClInclude Include="HeightMap.h">
       <Filter>Geometry</Filter>
     </ClInclude>
+    <ClInclude Include="AABB.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Time.cpp">
@@ -161,5 +162,6 @@
     <ClCompile Include="HeightMap.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
+    <ClCompile Include="AABB.cpp" />
   </ItemGroup>
 </Project>

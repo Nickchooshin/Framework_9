@@ -203,6 +203,8 @@ namespace framework9
 		vertices[23].tu = 1.0f;
 		vertices[23].tv = 0.0f;
 
+		UpdateBoundBoxToVertex(vertices, 24);
+
 		auto GetNormal = [](Vector3 &v1, Vector3 &v2, Vector3 &v3)
 		{
 			Vector3 v12 = v2 - v1;

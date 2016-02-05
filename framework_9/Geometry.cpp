@@ -15,6 +15,7 @@ namespace framework9
 		, m_matWorld()
 		, m_matT()
 		, m_matQuat()
+		, m_boundBox()
 	{
 		D3DXMatrixIdentity(&m_matWorld);
 		D3DXMatrixIdentity(&m_matT);
@@ -95,6 +96,11 @@ namespace framework9
 		return m_matWorld;
 	}
 
+	AABB3d CGeometry::GetBoundBox() const
+	{
+		return m_boundBox;
+	}
+
 	void CGeometry::UpdateMatrix()
 	{
 		if (m_updateMatrix != 0)
@@ -127,6 +133,28 @@ namespace framework9
 			}
 
 			m_matWorld = m_matWorld * m_matQuat * m_matScale * m_matT;
+		}
+	}
+
+	void CGeometry::UpdateBoundBoxFromVertex(Vertex *vertices, int num)
+	{
+		for (int i = 0; i < num; i++)
+		{
+			Vector3 &position = vertices[i].position;
+
+			if (position.x < m_boundBox.min.x)
+				m_boundBox.min.x = position.x;
+			if (position.y < m_boundBox.min.y)
+				m_boundBox.min.y = position.y;
+			if (position.z < m_boundBox.min.z)
+				m_boundBox.min.z = position.z;
+
+			if (position.x > m_boundBox.max.x)
+				m_boundBox.max.x = position.x;
+			if (position.y > m_boundBox.max.y)
+				m_boundBox.max.y = position.y;
+			if (position.z > m_boundBox.max.z)
+				m_boundBox.max.z = position.z;
 		}
 	}
 }

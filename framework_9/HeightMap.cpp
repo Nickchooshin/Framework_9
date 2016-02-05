@@ -72,6 +72,8 @@ namespace framework9
 			}
 		}
 
+		UpdateBoundBoxToVertex(vertices, (m_width * m_height));
+
 		m_heightMap->Unlock();
 
 		if (FAILED(direct3DDevice->CreateIndexBuffer((m_width - 1) * (m_height - 1) * 2 * sizeof(Index), 0, D3DFMT_INDEX16, D3DPOOL_DEFAULT, &m_indexBuffer, nullptr)))

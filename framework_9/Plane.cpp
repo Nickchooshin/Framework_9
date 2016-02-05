@@ -60,6 +60,8 @@ namespace framework9
 		for (int i = 0; i < 4; i++)
 			vertices[i].normal = { 0.0f, 1.0f, 0.0f };
 
+		UpdateBoundBoxToVertex(vertices, 4);
+
 		m_vertexBuffer->Unlock();
 
 		// Index Buffer

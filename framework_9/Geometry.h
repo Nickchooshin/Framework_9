@@ -5,6 +5,7 @@
 #include "Vertex.h"
 #include "Vector.h"
 #include "Matrix.h"
+#include "AABB.h"
 
 namespace framework9
 {
@@ -27,6 +28,8 @@ namespace framework9
 		D3DXMATRIXA16 m_matQuat;
 		D3DXMATRIXA16 m_matScale;
 
+		AABB3d m_boundBox;
+
 	public:
 		CGeometry();
 		virtual ~CGeometry();
@@ -43,10 +46,12 @@ namespace framework9
 
 		Vector3 GetPosition() const;
 		D3DXMATRIXA16 GetMatrix() const;
+		AABB3d GetBoundBox() const;
 
 		virtual void Render() = 0;
 	protected:
 		void UpdateMatrix();
+		void UpdateBoundBoxFromVertex(Vertex *vertices, int num);
 	};
 }
 
