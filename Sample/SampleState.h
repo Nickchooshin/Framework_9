@@ -35,6 +35,7 @@ private:
 
 	CHeightMap *m_heightMap;
 	CTexture *m_heightMapTexture;
+	CTexture *m_heightMapTexture2;
 
 	Vector3 m_cameraPosition;
 	Vector3 m_cameraRotation;

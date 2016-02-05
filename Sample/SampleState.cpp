@@ -26,6 +26,7 @@ SampleState::SampleState()
 	, m_texture(nullptr)
 	, m_heightMap(nullptr)
 	, m_heightMapTexture(nullptr)
+	, m_heightMapTexture2(nullptr)
 	, m_cameraPosition(0.0f, 3.0f, 2.0f)
 	, m_cameraRotation()
 	, m_cameraMove()
@@ -81,6 +82,12 @@ SampleState::~SampleState()
 		delete m_heightMapTexture;
 		m_heightMapTexture = nullptr;
 	}
+
+	if (m_heightMapTexture2)
+	{
+		delete m_heightMapTexture2;
+		m_heightMapTexture2 = nullptr;
+	}
 }
 
 void SampleState::Init()
@@ -125,8 +132,12 @@ void SampleState::Init()
 	//m_heightMapTexture->CreateTexture(L"./Resources/Heightmap.png");
 	m_heightMapTexture->CreateTexture(L"./Resources/mountains.jpg");
 
+	m_heightMapTexture2 = new CTexture();
+	m_heightMapTexture2->CreateTexture(L"./Resources/desert.bmp");
+
 	m_heightMap = new CHeightMap();
 	m_heightMap->Init();
+	m_heightMap->SetTexture(m_heightMapTexture2);
 	m_heightMap->SetHeightMap(m_heightMapTexture);
 	m_heightMap->SetScale(2.0f, 1.0f, 2.0f);
 	//m_heightMap->SetScale(15.0f, 0.25f, 15.0f);

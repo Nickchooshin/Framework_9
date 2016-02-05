@@ -66,6 +66,8 @@ namespace framework9
 				vertices[index].position.x = -0.5f + (1.0f * ((float)x / m_width));
 				vertices[index].position.y = 0.0f + (1.0f * ((float)r / 255));
 				vertices[index].position.z = -0.5f + (1.0f * ((float)y / m_height));
+				vertices[index].tu = 0.0f + (1.0f * ((float)x / m_width));
+				vertices[index].tv = 0.0f + (1.0f * ((float)y / m_height));
 				int abcd = 0;
 			}
 		}
