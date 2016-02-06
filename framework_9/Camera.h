@@ -6,6 +6,8 @@
 
 namespace framework9
 {
+	class CGeometry;
+
 	class CCamera : public CDirect3DObject
 	{
 	private:
@@ -13,6 +15,10 @@ namespace framework9
 		Vector3 m_direction;
 		Vector3 m_up;
 		Vector3 m_rotation;
+
+		//
+		D3DXPLANE m_plane[6];
+		//
 
 	public:
 		CCamera();
@@ -25,6 +31,8 @@ namespace framework9
 		void SetPosition(float x, float y, float z);
 		void SetRotation(Vector3 rotation);
 		void SetRotation(float x, float y, float z);
+
+		bool IsCulling(CGeometry *geometry);
 	private:
 		void UpdateViewMatrix();
 		void _UpdateViewMatrix();

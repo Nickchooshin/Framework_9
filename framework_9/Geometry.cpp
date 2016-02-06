@@ -98,7 +98,17 @@ namespace framework9
 
 	AABB3d CGeometry::GetBoundBox() const
 	{
-		return m_boundBox;
+		AABB3d boundBox(m_boundBox);
+
+		boundBox.min.x *= m_scale.x;
+		boundBox.min.y *= m_scale.y;
+		boundBox.min.z *= m_scale.z;
+
+		boundBox.max.x *= m_scale.x;
+		boundBox.max.y *= m_scale.y;
+		boundBox.max.z *= m_scale.z;
+
+		return boundBox + m_position;
 	}
 
 	void CGeometry::UpdateMatrix()

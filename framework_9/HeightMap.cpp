@@ -72,7 +72,7 @@ namespace framework9
 			}
 		}
 
-		UpdateBoundBoxToVertex(vertices, (m_width * m_height));
+		UpdateBoundBoxFromVertex(vertices, (m_width * m_height));
 
 		m_heightMap->Unlock();
 

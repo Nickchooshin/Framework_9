@@ -1,6 +1,10 @@
 #include "Camera.h"
+#include "Geometry.h"
 
 #include <d3dx9.h>
+//
+#include <stdio.h>
+//
 
 namespace framework9
 {
@@ -63,6 +67,43 @@ namespace framework9
 		UpdateViewMatrix();
 	}
 
+	bool CCamera::IsCulling(CGeometry *geometry)
+	{
+		AABB3d aabb = geometry->GetBoundBox();
+		Vector3 aabbVertex[8] =
+		{
+			{ aabb.min.x, aabb.min.y, aabb.min.z },
+			{ aabb.min.x, aabb.min.y, aabb.max.z },
+			{ aabb.min.x, aabb.max.y, aabb.min.z },
+			{ aabb.min.x, aabb.max.y, aabb.max.z },
+			{ aabb.max.x, aabb.min.y, aabb.min.z },
+			{ aabb.max.x, aabb.min.y, aabb.max.z },
+			{ aabb.max.x, aabb.max.y, aabb.min.z },
+			{ aabb.max.x, aabb.max.y, aabb.max.z }
+		};
+
+		for (int i = 0; i < 8; i++)
+		{
+			bool isCulling = false;
+
+			for (int j = 0; j < 6; j++)
+			{
+				float fDist = D3DXPlaneDotCoord(&m_plane[j], (D3DXVECTOR3*)&aabbVertex[i]);
+
+				if (fDist > 0.0f)
+				{
+					isCulling = true;
+					break;
+				}
+			}
+
+			if (!isCulling)
+				return false;
+		}
+
+		return true;
+	}
+
 	void CCamera::UpdateViewMatrix()
 	{
 		Vector3 xAxis, yAxis, zAxis;
@@ -94,6 +135,36 @@ namespace framework9
 		};
 
 		direct3DDevice->SetTransform(D3DTS_VIEW, &matView);
+
+		// Frustum
+		D3DXMATRIX matInv;
+		D3DXMATRIX matProj;
+
+		Vector3 vertex[8] =
+		{
+			{ -1.0f, 1.0f, 0.0f },
+			{ 1.0f, 1.0f, 0.0f },
+			{ -1.0f, -1.0f, 0.0f },
+			{ 1.0f, -1.0f, 0.0f },
+			{ -1.0f, 1.0f, 1.0f },
+			{ 1.0f, 1.0f, 1.0f },
+			{ -1.0f, -1.0f, 1.0f },
+			{ 1.0f, -1.0f, 1.0f }
+		};
+
+		direct3DDevice->GetTransform(D3DTS_PROJECTION, &matProj);
+		matInv = matView * matProj;
+		D3DXMatrixInverse(&matInv, nullptr, &matInv);
+
+		for (int i = 0; i < 8; i++)
+			D3DXVec3TransformCoord((D3DXVECTOR3*)&vertex[i], (D3DXVECTOR3*)&vertex[i], &matInv);
+
+		D3DXPlaneFromPoints(&m_plane[0], (D3DXVECTOR3*)&vertex[0], (D3DXVECTOR3*)&vertex[2], (D3DXVECTOR3*)&vertex[3]);	// °¡±î¿î¸é
+		D3DXPlaneFromPoints(&m_plane[1], (D3DXVECTOR3*)&vertex[4], (D3DXVECTOR3*)&vertex[5], (D3DXVECTOR3*)&vertex[6]);	// ¸Õ¸é
+		D3DXPlaneFromPoints(&m_plane[2], (D3DXVECTOR3*)&vertex[4], (D3DXVECTOR3*)&vertex[0], (D3DXVECTOR3*)&vertex[1]);	// À­¸é
+		D3DXPlaneFromPoints(&m_plane[3], (D3DXVECTOR3*)&vertex[6], (D3DXVECTOR3*)&vertex[7], (D3DXVECTOR3*)&vertex[2]);	// ¾Æ·§¸é
+		D3DXPlaneFromPoints(&m_plane[4], (D3DXVECTOR3*)&vertex[4], (D3DXVECTOR3*)&vertex[6], (D3DXVECTOR3*)&vertex[2]);	// ¿ÞÂÊ¸é
+		D3DXPlaneFromPoints(&m_plane[5], (D3DXVECTOR3*)&vertex[1], (D3DXVECTOR3*)&vertex[3], (D3DXVECTOR3*)&vertex[5]);	// ¿À¸¥ÂÊ¸é
 	}
 
 	void CCamera::_UpdateViewMatrix()

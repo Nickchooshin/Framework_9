@@ -144,7 +144,7 @@ void SampleState::Init()
 
 	m_cube->SetTexture(m_texture);
 	m_cube->SetPosition(0.0f, 0.0f, 1.0f);
-	m_cube->SetRotation(0.0f, 45.0f, 0.0f);
+	//m_cube->SetRotation(0.0f, 45.0f, 0.0f);
 	m_cube->SetScale(0.5f, 0.5f, 0.5f);
 }
 
@@ -166,10 +166,13 @@ void SampleState::Update()
 
 void SampleState::Render()
 {
-	m_cube->Render();
-	m_plane->Render();
+	if (!m_camera->IsCulling(m_cube))
+		m_cube->Render();
+	if (!m_camera->IsCulling(m_plane))
+		m_plane->Render();
 
-	m_heightMap->Render();
+	if (!m_camera->IsCulling(m_heightMap))
+		m_heightMap->Render();
 }
 
 void SampleState::Timer(float dt)
